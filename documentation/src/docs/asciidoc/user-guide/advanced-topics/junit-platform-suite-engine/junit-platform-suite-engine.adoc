@@ -15,9 +15,9 @@ you need _at least one_ other test engine and its dependencies on the classpath.
 ===== Required Dependencies
 
 * `junit-platform-suite-api` in _test_ scope: artifact containing annotations needed to
-  configure a test suite
+configure a test suite
 * `junit-platform-suite-engine` in _test runtime_ scope: implementation of the
-  `TestEngine` API for declarative test suites
+`TestEngine` API for declarative test suites
 
 NOTE: Both of the required dependencies are aggregated in the `junit-platform-suite`
 artifact which can be declared in _test_ scope instead of declaring explicit dependencies

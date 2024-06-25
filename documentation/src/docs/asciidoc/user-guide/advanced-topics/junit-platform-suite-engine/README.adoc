@@ -1,0 +1,40 @@
+[[junit-platform-suite-engine]]
+=== JUnit Platform Suite Engine
+* allows
+** about suites of tests | _any_ test engine
+*** declarative definition &
+*** execution
+
+[[junit-platform-suite-engine-setup]]
+==== Setup
+* artifacts -- Check '../apendix/dependency-metadata'  <<dependency-metadata>> --
+** alternatives
+*** alternative 1
+**** `junit-platform-suite-api` / `<scope>test</scope>`
+**** `junit-platform-suite-engine` / `<scope>test</scope>` & `<scope>runtime</scope>` -- TODO: Check if it's fine bot --
+***** -> implementation of the `TestEngine` API -- for -- declarative test suites
+*** alternative 2
+**** `junit-platform-suite` /  `<scope>test</scope>`
+** >=1 other test engine & its dependencies | classpath
+
+[[junit-platform-suite-engine-setup-transitive-dependencies]]
+===== Transitive Dependencies
+
+* `junit-platform-suite-commons` in _test_ scope
+* `junit-platform-launcher` in _test_ scope
+* `junit-platform-engine` in _test_ scope
+* `junit-platform-commons` in _test_ scope
+* `opentest4j` in _test_ scope
+
+[[junit-platform-suite-engine-example]]
+==== @Suite
+* if you mark a class with `@Suite` -> test suite on the JUnit Platform
+** -> you can control it via  -- Check https://javadoc.io/doc/org.junit.platform/junit-platform-suite-api/latest/org/junit/platform/suite/api/package-summary.html[suite-api-package] --
+*** selector annotations
+*** filter annotations
+
+
+[source,java,indent=0]
+----
+include::{testDir}/example/SuiteDemo.java[tags=user_guide]
+----
