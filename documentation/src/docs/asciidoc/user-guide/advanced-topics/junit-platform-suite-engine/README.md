@@ -23,7 +23,7 @@
 ## Examples
 * `@Suite`
     * if you mark a class with `@Suite` -> test suite on the JUnit Platform
-        * -> you can control it via  -- Check https://javadoc.io/doc/org.junit.platform/junit-platform-suite-api/latest/org/junit/platform/suite/api/package-summary.html[suite-api-package] --
+        * -> you can control it via  -- Check [suite-api-package](https://javadoc.io/doc/org.junit.platform/junit-platform-suite-api/latest/org/junit/platform/suite/api/package-summary.html) --
             * selector annotations
             * filter annotations
     * Check '{testDir}/example/SuiteDemo.java'
