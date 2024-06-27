@@ -30,4 +30,5 @@
       * Go to `../documentation` and run `mvn test`
         * Problems:
           * Problems1: "package org.junit.jupiter.api.extension does not exist"
+            * Attempt1: Add 'org.junit:junit-bom'
             * Solution: TODO:
