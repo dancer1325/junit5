@@ -2645,6 +2645,9 @@ This heuristic is queried by the `disabled_on_debug` mode.
             **** `junit.jupiter.execution.parallel.mode.default = concurrent` or
             **** `@Execution`
                 ***** | element -- affects to -> annotated element + its subelements
+            **** `junit.jupiter.execution.parallel.mode.classes.default = concurrent`
+                ***** == default execution mode | top-level classes
+                ***** ⚠️ if it's NOT explicitly set -> inherit the value from `junit.jupiter.execution.parallel.mode.default`  ⚠️
         *** available execution modes
             **** `SAME_THREAD`
                 ***** default by ALL test / EXCEPTION
@@ -2652,60 +2655,48 @@ This heuristic is queried by the `disabled_on_debug` mode.
                     ****** test classes / use `MethodOrderer`, EXCEPT to `MethodOrderer_Random`
                 ***** test's thread == parent's thread
                     ****** _Example:_ (ALL next methods | same test class) `@BeforeAll` method's thread == ANY method's thread == `@AfterAll` method's thread
+                ***** + default `ClassOrderer` registered (Check <<writing-tests-test-execution-order-classes>>) -> top-level test classes scheduled and sorted accordingly, BUT NOT guaranteed to start from that order
+                    ****** Reason: 🧠 threads they are executed on are NOT controlled by JUnit 🧠
             **** `CONCURRENT`
                 ***** == tests methods run concurrently
                     ****** EXCEPTION  resource lock forces execution | SAME thread
+                ***** ALL nodes | tree / configured concurrently
+                    ****** executed fully in parallel / -- according to the provided -- <<writing-tests-parallel-execution-config, configuration>>
+                    ****** observe the declarative declarative <<writing-tests-parallel-execution-synchronization, synchronization>> mechanism
+                    ****** <<running-tests-capturing-output>> -- needs to be enabled -- separately
+* _Examples:_
+    ** _Example1:_
 
-[source,properties]
-.Configuration parameters to execute ALL tests in parallel
-----
-junit.jupiter.execution.parallel.enabled = true
-junit.jupiter.execution.parallel.mode.default = concurrent
-----
+    [source,properties]
+    .Configuration parameters to execute ALL tests in parallel
+    ----
+    junit.jupiter.execution.parallel.enabled = true
+    junit.jupiter.execution.parallel.mode.default = concurrent
+    ----
 
-* TODO:
+    ** _Example2:_
 
-When parallel execution is enabled and a default `{ClassOrderer}` is registered (see
-<<writing-tests-test-execution-order-classes>> for details), top-level test classes will
-initially be sorted accordingly and scheduled in that order. However, they are not
-guaranteed to be started in exactly that order since the threads they are executed on are
-not controlled directly by JUnit.
+    [source,properties]
+    .Configuration parameters to execute top-level classes in parallel but methods in same thread
+    ----
+    junit.jupiter.execution.parallel.enabled = true
+    junit.jupiter.execution.parallel.mode.default = same_thread
+    junit.jupiter.execution.parallel.mode.classes.default = concurrent
+    ----
 
-All nodes of the test tree that are configured with the `CONCURRENT` execution mode will
-be executed fully in parallel according to the provided
-<<writing-tests-parallel-execution-config, configuration>> while observing the
-declarative <<writing-tests-parallel-execution-synchronization, synchronization>>
-mechanism. Please note that <<running-tests-capturing-output>> needs to be enabled
-separately.
+    ** _Example3:_
 
-In addition, you can configure the default execution mode for top-level classes by setting
-the `junit.jupiter.execution.parallel.mode.classes.default` configuration parameter. By
-combining both configuration parameters, you can configure classes to run in parallel but
-their methods in the same thread:
+    [source,properties]
+    .Configuration parameters to execute top-level classes sequentially but their methods in parallel
+    ----
+    junit.jupiter.execution.parallel.enabled = true
+    junit.jupiter.execution.parallel.mode.default = concurrent
+    junit.jupiter.execution.parallel.mode.classes.default = same_thread
+    ----
 
-[source,properties]
-.Configuration parameters to execute top-level classes in parallel but methods in same thread
-----
-junit.jupiter.execution.parallel.enabled = true
-junit.jupiter.execution.parallel.mode.default = same_thread
-junit.jupiter.execution.parallel.mode.classes.default = concurrent
-----
-
-The opposite combination will run all methods within one class in parallel, but top-level
-classes will run sequentially:
-
-[source,properties]
-.Configuration parameters to execute top-level classes sequentially but their methods in parallel
-----
-junit.jupiter.execution.parallel.enabled = true
-junit.jupiter.execution.parallel.mode.default = concurrent
-junit.jupiter.execution.parallel.mode.classes.default = same_thread
-----
-
-The following diagram illustrates how the execution of two top-level test classes `A` and
-`B` with two test methods per class behaves for all four combinations of
+    ** _Example4:_ diagram / 2 top-level test classes `A` and `B` / 2 test methods / class / ALL 4 combinations of
 `junit.jupiter.execution.parallel.mode.default` and
-`junit.jupiter.execution.parallel.mode.classes.default` (see labels in first column).
+`junit.jupiter.execution.parallel.mode.classes.default`
 
 ////
 Source: https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNqFlE1u2zAQha9CEChio7IQKfVGXfUH_QEatICyKAIBwYQaW0QkUiDHhV3X2x4gvWFPUlKUbTmpEq2kN2-GHx403HKhS-QZn81mhSqlbWvYXDopY0I3LQgqVFcq1BIUuS_mnhIIP2jTALHvQYG1tL3ywgaJpLj7rAjND6hZsteoRvb39x9GlUEoLfvltMZL9_4M77EoSGrFJhYavAm-iA0-psH3Jia0lEymLANrk4idR_tjQintS2nEYOE4WLClwfP22H7b6QeP818MPWnvOcwJ_ldPAwutxMoYVPQ_XjHOKwa8YoT3tP0EUwww-_YHmEey52IV47EKH8dDhEAnBmmKR4mnvScdeNLnMJ8MU4yHKcQ45XiGgy4e8Qbdby1LtyNbby04VdhgwTP3qnBFBuqCR6EUdsSVtmFqwWtc0DcoS6mWXk_TebQv3YL5CK1Xk_ODuDSy_CIV5gRm2DiwuL5PKJdVd9DFUV9oRbn82aElc6_uogHxuzwP0DGBvbvCtcs17tO-6vZyy_yI2QIaWW8ydva1RcVyUPbsdahYNz1L5u2a7VjsSVnst5yRG-a6--sjU1rhqSNTVM1EJetykqqXyfSRueCF2rmwYUU63yjBMzIrjPiq9XfNewlLAw3PFlBbp2IpSZvLcHN1F1jEW1DXWu89u3-YPX1X
@@ -2747,13 +2738,11 @@ gantt
 ////
 image::writing-tests_execution_mode.svg[caption='',title='Default execution mode configuration combinations']
 
-If the `junit.jupiter.execution.parallel.mode.classes.default` configuration parameter is
-not explicitly set, the value for `junit.jupiter.execution.parallel.mode.default` will be
-used instead.
 
 [[writing-tests-parallel-execution-config]]
 ==== Configuration
 
+* TODO:
 Properties such as the desired parallelism and the maximum pool size can be configured
 using a `{ParallelExecutionConfigurationStrategy}`. The JUnit Platform provides two
 implementations out of the box: `dynamic` and `fixed`. Alternatively, you may implement a
