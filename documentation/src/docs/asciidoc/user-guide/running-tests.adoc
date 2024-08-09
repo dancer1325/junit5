@@ -925,43 +925,34 @@ The following discovery selectors are provided out of the box:
 [[running-tests-config-params]]
 === Configuration Parameters
 
-In addition to instructing the platform which test classes and test engines to include,
-which packages to scan, etc., it is sometimes necessary to provide additional custom
-configuration parameters that are specific to a particular test engine, listener, or
-registered extension. For example, the JUnit Jupiter `TestEngine` supports _configuration
-parameters_ for the following use cases.
-
-- <<writing-tests-test-instance-lifecycle-changing-default>>
-- <<extensions-registration-automatic-enabling>>
-- <<extensions-conditions-deactivation>>
-- <<writing-tests-display-name-generator-default>>
-
-_Configuration Parameters_ are text-based key-value pairs that can be supplied to test
-engines running on the JUnit Platform via one of the following mechanisms.
-
-1. The `configurationParameter()` and `configurationParameters()` methods in the
-  `LauncherDiscoveryRequestBuilder` which is used to build a request supplied to the
-  <<launcher-api, `Launcher` API>>. When running tests via one of the tools provided
-  by the JUnit Platform you can specify configuration parameters as follows:
-  * <<running-tests-console-launcher,Console Launcher>>: use the `--config`
-    command-line option.
-  * <<running-tests-build-gradle-config-params,Gradle>>: use the
-    `systemProperty` or `systemProperties` DSL.
-  * <<running-tests-build-maven-config-params,Maven Surefire provider>>: use the
-    `configurationParameters` property.
-2. JVM system properties.
-3. The JUnit Platform configuration file: a file named `junit-platform.properties` in the
-  root of the class path that follows the syntax rules for a Java `Properties` file.
-
-NOTE: Configuration parameters are looked up in the exact order defined above.
-Consequently, configuration parameters supplied directly to the `Launcher` take
-precedence over those supplied via system properties and the configuration file.
-Similarly, configuration parameters supplied via system properties take precedence over
-those supplied via the configuration file.
+* := key-value pairs /
+    ** both are text-based
+    ** 👁️ ways to supply to test engines / running | JUnit Platform, ⚠️taking precedence from first to last of next options (_Example:_ `Launcher` takes precedence over JVM)  ⚠️ 👁️
+        *** `LauncherDiscoveryRequestBuilder.configurationParameter()` & `LauncherDiscoveryRequestBuilder.configurationParameters()`
+            **** build a request / -- supplied to the -- <<launcher-api, `Launcher` API>>
+            **** allowed configuration parameters
+                ***** CL option `--config` -- Check <<running-tests-console-launcher,Console Launcher>> --
+                ***** `systemProperty` or `systemProperties` DSL -- Check <<running-tests-build-gradle-config-params,Gradle>> --
+                ***** `configurationParameters` property -- Check <<running-tests-build-maven-config-params,Maven Surefire provider>> --
+        *** JVM system properties
+        *** `junit-platform.properties`
+            **** JUnit Platform configuration file
+            **** | root of the class path
+            **** syntax rule == Java '.properties' syntax rule
+* can be specific to a particular
+    ** test engine,
+        *** _Example:_ JUnit Jupiter `TestEngine` supports _configuration parameters_ | use cases
+            **** <<writing-tests-test-instance-lifecycle-changing-default>>
+            **** <<extensions-registration-automatic-enabling>>
+            **** <<extensions-conditions-deactivation>>
+            **** <<writing-tests-display-name-generator-default>>
+    ** test listener, or
+    ** test registered extension
 
 [[running-tests-config-params-deactivation-pattern]]
 ==== Pattern Matching Syntax
 
+* TODO:
 This section describes the pattern matching syntax that is applied to the _configuration
 parameters_ used for the following features.
 
