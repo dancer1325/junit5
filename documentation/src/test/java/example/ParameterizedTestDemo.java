@@ -490,13 +490,16 @@ class ParameterizedTestDemo {
         "John, Doe, M, 1990-10-22"
     })
     void testWithArgumentsAggregator(@AggregateWith(PersonAggregator.class) Person person) {
-        // perform assertions against person
+		// @AggregateWith(...)		==    register the custom aggregator
+		// perform assertions against person
     }
 
     // end::ArgumentsAggregator_example[]
     static
     // tag::ArgumentsAggregator_example_PersonAggregator[]
     public class PersonAggregator implements ArgumentsAggregator {
+		// implement the ArgumentsAggregator
+		// UNIQUE ways to declare them: 1) top-level class, or 2) `static` nested class
         @Override
         public Person aggregateArguments(ArgumentsAccessor arguments, ParameterContext context) {
             return new Person(arguments.getString(0),
@@ -516,6 +519,7 @@ class ParameterizedTestDemo {
         "John, Doe, M, 1990-10-22"
     })
     void testWithCustomAggregatorAnnotation(@CsvToPerson Person person) {
+		// @CsvToPerson			custom _composed annotation_
         // perform assertions against person
     }
     // end::ArgumentsAggregator_with_custom_annotation_example[]
@@ -523,7 +527,7 @@ class ParameterizedTestDemo {
     // tag::ArgumentsAggregator_with_custom_annotation_example_CsvToPerson[]
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.PARAMETER)
-    @AggregateWith(PersonAggregator.class)
+    @AggregateWith(PersonAggregator.class)			//
     public @interface CsvToPerson {
     }
     // end::ArgumentsAggregator_with_custom_annotation_example_CsvToPerson[]

@@ -2162,17 +2162,15 @@ include::{testDir}/example/ParameterizedTestDemo.java[tags=ArgumentsAccessor_exa
 [[writing-tests-parameterized-tests-argument-aggregation-custom]]
 ===== Custom Aggregators
 
-* TODO:
-Apart from direct access to a `@ParameterizedTest` method's arguments using an
-`ArgumentsAccessor`, JUnit Jupiter also supports the usage of custom, reusable
-_aggregators_.
-
-To use a custom aggregator, implement the `{ArgumentsAggregator}` interface and register
-it via the `@AggregateWith` annotation on a compatible parameter in the
-`@ParameterizedTest` method. The result of the aggregation will then be provided as an
-argument for the corresponding parameter when the parameterized test is invoked. Note
-that an implementation of `ArgumentsAggregator` must be declared as either a top-level
-class or as a `static` nested class.
+* characteristics
+    ** custom
+    ** reusable
+* steps
+    ** implement the `{ArgumentsAggregator}`
+        *** 👁️ UNIQUE ways to declare them 👁️
+            **** top-level class OR
+            **** `static` nested class
+    ** register it -- via the -- `@AggregateWith` | `@ParameterizedTest` method's parameter
 
 [source,java,indent=0]
 ----
@@ -2184,11 +2182,12 @@ include::{testDir}/example/ParameterizedTestDemo.java[tags=ArgumentsAggregator_e
 include::{testDir}/example/ParameterizedTestDemo.java[tags=ArgumentsAggregator_example_PersonAggregator]
 ----
 
-If you find yourself repeatedly declaring `@AggregateWith(MyTypeAggregator.class)` for
-multiple parameterized test methods across your codebase, you may wish to create a custom
-_composed annotation_ such as `@CsvToMyType` that is meta-annotated with
-`@AggregateWith(MyTypeAggregator.class)`. The following example demonstrates this in
-action with a custom `@CsvToPerson` annotation.
+* custom _composed annotation_ /
+    ** steps
+        *** implement the `{ArgumentsAggregator}`  -- as another custom aggregator --
+        *** 👁️ create annotation / meta-annotated with `@AggregateWith(MyTypeAggregator.class)` 👁️
+    ** use cases
+        *** avoid REPEATEDLY registering custom aggregators ( == `@AggregateWith(MyTypeAggregator.class)` ) | multiple parameterized test methods
 
 [source,java,indent=0]
 ----
@@ -2200,10 +2199,10 @@ include::{testDir}/example/ParameterizedTestDemo.java[tags=ArgumentsAggregator_w
 include::{testDir}/example/ParameterizedTestDemo.java[tags=ArgumentsAggregator_with_custom_annotation_example_CsvToPerson]
 ----
 
-
 [[writing-tests-parameterized-tests-display-names]]
 ==== Customizing Display Names
 
+* TODO:
 By default, the display name of a parameterized test invocation contains the invocation
 index and the `String` representation of all arguments for that specific invocation. Each
 argument is preceded by its parameter name (unless the argument is only available via an
