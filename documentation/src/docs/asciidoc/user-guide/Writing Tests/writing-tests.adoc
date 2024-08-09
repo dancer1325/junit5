@@ -2142,29 +2142,27 @@ If you wish to implement a custom `ArgumentConverter` that also consumes an anno
 [[writing-tests-parameterized-tests-argument-aggregation]]
 ==== Argument Aggregation
 
-By default, each _argument_ provided to a `@ParameterizedTest` method corresponds to a
-single method parameter. Consequently, argument sources which are expected to supply a
-large number of arguments can lead to large method signatures.
-
-In such cases, an `{ArgumentsAccessor}` can be used instead of multiple parameters. Using
-this API, you can access the provided arguments through a single argument passed to your
-test method. In addition, type conversion is supported as discussed in
-<<writing-tests-parameterized-tests-argument-conversion-implicit>>.
-
-Besides, you can retrieve the current test invocation index with
-`ArgumentsAccessor.getInvocationIndex()`.
+* := API /
+    ** allows
+        *** ⭐ accessing to the provided arguments -- through -- 1! argument passed ⭐
+    ** support type conversion -- check <<writing-tests-parameterized-tests-argument-conversion-implicit>> --
+    ** `getInvocationIndex()`
+        *** retrieve the current test invocation index
+    ** 1 instance of `ArgumentsAccessor` injected automatically / ANY parameter of type `ArgumentsAccessor`
+* use cases
+    ** 👁️alternative to add MULTIPLE parameters 👁️
+        *** Reason: 🧠 1 method parameter / (by default) `@ParameterizedTest` method ' s arguments
+            **** -> if you want to pass many `@ParameterizedTest` 's arguments -> large method signatures
 
 [source,java,indent=0]
 ----
 include::{testDir}/example/ParameterizedTestDemo.java[tags=ArgumentsAccessor_example]
 ----
 
-_An instance of `ArgumentsAccessor` is automatically injected into any parameter of type
-`ArgumentsAccessor`._
-
 [[writing-tests-parameterized-tests-argument-aggregation-custom]]
 ===== Custom Aggregators
 
+* TODO:
 Apart from direct access to a `@ParameterizedTest` method's arguments using an
 `ArgumentsAccessor`, JUnit Jupiter also supports the usage of custom, reusable
 _aggregators_.

@@ -462,7 +462,9 @@ class ParameterizedTestDemo {
         "Jane, Doe, F, 1990-05-20",
         "John, Doe, M, 1990-10-22"
     })
+	// alternative to add MULTIPLE parameters
     void testWithArgumentsAccessor(ArgumentsAccessor arguments) {
+		// instance of ArgumentsAccessor / argument -- check how getter operations are valid
         Person person = new Person(arguments.getString(0),
                                    arguments.getString(1),
                                    arguments.get(2, Gender.class),
