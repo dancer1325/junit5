@@ -771,10 +771,8 @@ custom annotations for tags.
 [[writing-tests-test-execution-order]]
 === Test Execution Order
 
-By default, test classes and methods will be ordered using an algorithm that is
-deterministic but intentionally nonobvious. This ensures that subsequent runs of a test
-suite execute test classes and test methods in the same order, thereby allowing for
-repeatable builds.
+* Test classes & methods -- are 👁️ordered 👁️ via -- deterministic algorithm, BUT NOT obvious
+    ** -> 👁ALL runs of test suite execute test classes & methods in the SAME order 👁
 
 NOTE: See <<writing-tests-definitions>> for a definition of _test method_ and _test class_.
 
