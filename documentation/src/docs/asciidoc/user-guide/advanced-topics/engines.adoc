@@ -1,29 +1,36 @@
 [[test-engines]]
 === Test Engines
 
-A `TestEngine` facilitates _discovery_ and _execution_ of tests for a particular
-programming model.
-
-For example, JUnit provides a `TestEngine` that discovers and executes tests written using
-the JUnit Jupiter programming model (see <<writing-tests>> and <<extensions>>).
+* allows
+  ** easier / programming model, to
+    *** discover tests
+    *** execute tests
+* types
+  ** built-in JUnit Test Engines
+  ** custom Test Engines
 
 [[test-engines-junit]]
 ==== JUnit Test Engines
 
-JUnit provides three `TestEngine` implementations.
-
-* `{junit-jupiter-engine}`: The core of JUnit Jupiter.
-* `{junit-vintage-engine}`: A thin layer on top of JUnit 4 to allow running _vintage_
-  tests (based on JUnit 3.8 and JUnit 4) with the JUnit Platform launcher infrastructure.
-* `{junit-platform-suite-engine}`: Executes declarative suites of tests with the JUnit
-  Platform launcher infrastructure.
+* `{junit-jupiter-engine}`
+  ** core of JUnit Jupiter
+  ** / JUnit Jupiter programming model
+* `{junit-vintage-engine}`
+  ** == thin layer | JUnit 4 /
+    *** allows
+      **** running _vintage_ tests (== JUnit 3.8 and JUnit 4) | JUnit Platform launcher infrastructure
+* `{junit-platform-suite-engine}`
+  ** allows
+    *** running declarative suites of tests | JUnit Platform launcher infrastructure
 
 [[test-engines-custom]]
 ==== Custom Test Engines
 
-You can contribute your own custom `{TestEngine}` by implementing the interfaces in the
-{junit-platform-engine} module and _registering_ your engine.
+* steps
+  ** implement {junit-platform-engine} module
+  ** _registering_ it
 
+* TODO:
 Every `TestEngine` must provide its own _unique ID_, _discover_ tests from an
 `EngineDiscoveryRequest`, and _execute_ those tests according to an `ExecutionRequest`.
 
