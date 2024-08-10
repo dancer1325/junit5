@@ -1,0 +1,50 @@
+[[junit-platform-suite-engine]]
+=== JUnit Platform Suite Engine
+
+* allows
+    ** about suites of tests | _any_ test engine
+        *** declarative definition &
+        *** execution
+
+[[junit-platform-suite-engine-setup]]
+==== Setup
+
+* `junit-platform-suite-api` + `junit-platform-suite-engine` + >=1 otherTestEngine + 's dependencies | classpath
+    **  Check <<dependency-metadata>>
+
+[[junit-platform-suite-engine-setup-required-dependencies]]
+===== Required Dependencies
+
+* alternative 1
+    ** `junit-platform-suite-api` / `<scope>test</scope>` +
+    ** `junit-platform-suite-engine` / `<scope>test</scope>` & `<scope>runtime</scope>`
+        *** Check https://stackoverflow.com/questions/27726779/declare-maven-dependency-as-test-runtime-only[runtime-test scope]
+        *** -> implementation of the `TestEngine` API -- for -- declarative test suites
+* alternative 2
+    ** `junit-platform-suite` / `<scope>test</scope>`
+        *** 👁️contains previous dependencies 👁️
+
+[[junit-platform-suite-engine-setup-transitive-dependencies]]
+===== Transitive Dependencies
+
+* `junit-platform-suite-commons` in _test_ scope
+* `junit-platform-launcher` in _test_ scope
+* `junit-platform-engine` in _test_ scope
+* `junit-platform-commons` in _test_ scope
+* `opentest4j` in _test_ scope
+
+[[junit-platform-suite-engine-example]]
+==== @Suite Example
+
+* `@Suite` | class -> test suite | JUnit Platform
+    ** you can control it via  -- Check https://javadoc.io/doc/org.junit.platform/junit-platform-suite-api/latest/org/junit/platform/suite/api/package-summary.html[suite-api-package] --
+        *** selector annotations
+        *** filter annotations
+    ** _Example:_
+
+[source,java,indent=0]
+----
+include::{testDir}/example/SuiteDemo.java[tags=user_guide]
+----
+
+
