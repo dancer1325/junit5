@@ -28,29 +28,18 @@
 
 * steps
   ** implement {junit-platform-engine} module
+    *** must provide
+      **** own _unique ID_
+        ***** 👁️`junit-` ID prefix -- is reserved for -- TestEngines from the JUnit Team 👁️
+          ****** -- enforced by the -- JUnit Platform `Launcher`
+      **** _discover_ tests -- from an -- `EngineDiscoveryRequest`
+        ***** recommendation: use `@Testable`
+          ****** _Example:_  `@Test` and `@TestFactory` of JUnit Jupiter are meta-annotated with it
+          ****** Check `{Testable}`
+      **** _execute_ those tests / -- according to an -- `ExecutionRequest`
   ** _registering_ it
 
 * TODO:
-Every `TestEngine` must provide its own _unique ID_, _discover_ tests from an
-`EngineDiscoveryRequest`, and _execute_ those tests according to an `ExecutionRequest`.
-
-[WARNING]
-.The `junit-` unique ID prefix is reserved for TestEngines from the JUnit Team
-====
-The JUnit Platform `Launcher` enforces that only `TestEngine` implementations published
-by the JUnit Team may use the `junit-` prefix for their `TestEngine` IDs.
-
-* If any third-party `TestEngine` claims to be `junit-jupiter` or `junit-vintage`, an
-  exception will be thrown, immediately halting execution of the JUnit Platform.
-* If any third-party `TestEngine` uses the `junit-` prefix for its ID, a warning message
-  will be logged. Later releases of the JUnit Platform will throw an exception for such
-  violations.
-====
-
-In order to facilitate test discovery within IDEs and tools prior to launching the JUnit
-Platform, `TestEngine` implementations are encouraged to make use of the `@Testable`
-annotation. For example, the `@Test` and `@TestFactory` annotations in JUnit Jupiter are
-meta-annotated with `@Testable`. Consult the Javadoc for `{Testable}` for further details.
 
 If your custom `TestEngine` needs to be configured, consider allowing users to supply
 configuration via <<running-tests-config-params,configuration parameters>>. Please note,
