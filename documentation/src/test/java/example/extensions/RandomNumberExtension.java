@@ -34,6 +34,8 @@ import org.junit.platform.commons.support.ModifierSupport;
 // 2.1 constructor
 // 2.2 test method
 // 2.3 lifecycle method
+// TestInstancePostProcessor	should be implemented, instead of `BeforeEachCallback`
+// Reason: -- to support -- NON-static field injection | immediately after instantiation of the test class
 class RandomNumberExtension
 		implements BeforeAllCallback, BeforeEachCallback, ParameterResolver {
 

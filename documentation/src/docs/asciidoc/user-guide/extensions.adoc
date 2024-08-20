@@ -37,9 +37,20 @@
         *** custom _<<writing-tests-meta-annotations,composed annotation>>_
         *** test class constructors' fields or parameters
             **** from JUnit Jupiter v5.8+
+            **** | superclasses' fields -- will be -- inherited
+                ***** Check <<extensions-registration-inheritance, Extension Inheritance>>
         *** lifecycle methods -- `@BeforeAll`, `@AfterAll`, `@BeforeEach`, and `@AfterEach` --
             **** from JUnit Jupiter v5.8+
     ** 👁️ there is a registration order -- based on -- declaration | source code 👁️
+        *** | fields, -- can be ordered via -- `@Order`
+            **** Check <<extensions-registration-programmatic-order, Extension Registration Order>>
+    ** -- NOT supported to register --  `TestInstancePostProcessor` | NON-static field
+        *** Check link:{junit5-repo}/issues/3437[issue 3437]
+        *** implements `BeforeEachCallback` -- as an -- alternative
+    ** 's fields -- may be -- `static` or NON-static
+        *** == `@RegisterExtension` 's fields ->  Check
+            **** <<extensions-registration-programmatic-static-fields, Static Fields>>
+            **** <<extensions-registration-programmatic-instance-fields, Instance Fields>>
 
 * _Example1:_ let's `WebServerExtension` / starts a local web server & injects the server's URL | parameters / -- annotated with -- `@WebServerUrl`
     ** _Example1.1:_ register a `WebServerExtension` | test method
@@ -123,53 +134,10 @@ public @interface DatabaseAndWebServerExtension {
 }
 ----
 
-
-* TODO:
-
-[NOTE]
-====
-Ideally, the `RandomNumberExtension` would implement `TestInstancePostProcessor` instead
-of `BeforeEachCallback` in order to support non-static field injection immediately after
-the test class has been instantiated.
-
-However, JUnit Jupiter currently does not allow a `TestInstancePostProcessor` to be
-registered via `@ExtendWith` on a non-static field (see
-link:{junit5-repo}/issues/3437[issue 3437]). In light of that, the `RandomNumberExtension`
-implements `BeforeEachCallback` as an alternative approach.
-====
-
-[source,java,indent=0]
-----
-include::{testDir}/example/extensions/RandomNumberExtension.java[tags=user_guide]
-----
-
-[TIP]
-.Extension Registration Order for `@ExtendWith` on Fields
-====
-Extensions registered declaratively via `@ExtendWith` on fields will be ordered relative
-to `@RegisterExtension` fields and other `@ExtendWith` fields using an algorithm that is
-deterministic but intentionally nonobvious. However, `@ExtendWith` fields can be ordered
-using the `@Order` annotation. See the <<extensions-registration-programmatic-order,
-Extension Registration Order>> tip for `@RegisterExtension` fields for details.
-====
-
-[TIP]
-.Extension Inheritance
-====
-Extensions registered declaratively via `@ExtendWith` on fields in superclasses will be
-inherited.
-
-See <<extensions-registration-inheritance, Extension Inheritance>> for details.
-====
-
-NOTE: `@ExtendWith` fields may be either `static` or non-static. The documentation on
-<<extensions-registration-programmatic-static-fields, Static Fields>> and
-<<extensions-registration-programmatic-instance-fields, Instance Fields>> for
-`@RegisterExtension` fields also applies to `@ExtendWith` fields.
-
 [[extensions-registration-programmatic]]
 ==== Programmatic Extension Registration
 
+* TODO:
 Developers can register extensions _programmatically_ by annotating fields in test classes
 with `{RegisterExtension}`.
 
