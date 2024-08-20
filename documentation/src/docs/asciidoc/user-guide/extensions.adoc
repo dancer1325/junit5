@@ -30,6 +30,7 @@
 * allows
     ** registering >= 1 extensions
 * `@ExtendWith(classReference1, classReference2, ...)`
+    ** == annotation -> UNIQUE way to register declaratively
     ** |
         *** test interface,
         *** test class,
@@ -42,8 +43,12 @@
         *** lifecycle methods -- `@BeforeAll`, `@AfterAll`, `@BeforeEach`, and `@AfterEach` --
             **** from JUnit Jupiter v5.8+
     ** 👁️ there is a registration order -- based on -- declaration | source code 👁️
-        *** | fields, -- can be ordered via -- `@Order`
-            **** Check <<extensions-registration-programmatic-order, Extension Registration Order>>
+        *** | fields
+            **** by default, it's ordered -- via an -- algorithm /
+                ***** is deterministic BUT intentionally nonobvious
+                ***** ALL runs of a test suite execute extensions / SAME order
+**** -- can be ordered via -- `@Order`
+                ***** Check <<extensions-registration-programmatic-order, Extension Registration Order>>
     ** -- NOT supported to register --  `TestInstancePostProcessor` | NON-static field
         *** Check link:{junit5-repo}/issues/3437[issue 3437]
         *** implements `BeforeEachCallback` -- as an -- alternative
@@ -137,38 +142,26 @@ public @interface DatabaseAndWebServerExtension {
 [[extensions-registration-programmatic]]
 ==== Programmatic Extension Registration
 
+* `{RegisterExtension}`
+    ** allows
+        *** registering extensions _programmatically_ | test classes' fields
+    ** registration order | fields
+        *** by default == `@ExtendWith`
+            **** == if you do NOT specify order | field -> default order
+            **** default order value = `Integer.MAX_VALUE / 2`
+        *** -- allows -- specifying order | fields
+            **** == `@Order` | `@ExtendWith`
+            **** if order value
+                ***** < default order value ->
+                    ***** registered BEFORE NON-annotated extensions
+                    ***** _after_ callback extensions -- are registered -- last
+                    ***** _before_ callback extensions -- are registered -- first
+                ***** > default order value ->
+                    ***** registered AFTER NON-annotated extensions
+                    ***** _after_ callback extensions -- are registered -- first
+                    ***** _before_ callback extensions -- are registered -- last
+
 * TODO:
-Developers can register extensions _programmatically_ by annotating fields in test classes
-with `{RegisterExtension}`.
-
-When an extension is registered _declaratively_ via
-<<extensions-registration-declarative,`@ExtendWith`>>, it can typically only be configured
-via annotations. In contrast, when an extension is registered via `@RegisterExtension`, it
-can be configured _programmatically_ -- for example, in order to pass arguments to the
-extension's constructor, a static factory method, or a builder API.
-
-[[extensions-registration-programmatic-order]]
-[TIP]
-.Extension Registration Order
-====
-By default, extensions registered programmatically via `@RegisterExtension` or
-declaratively via `@ExtendWith` on fields will be ordered using an algorithm that is
-deterministic but intentionally nonobvious. This ensures that subsequent runs of a test
-suite execute extensions in the same order, thereby allowing for repeatable builds.
-However, there are times when extensions need to be registered in an explicit order. To
-achieve that, annotate `@RegisterExtension` fields or `@ExtendWith` fields with `{Order}`.
-
-Any `@RegisterExtension` field or `@ExtendWith` field not annotated with `@Order` will be
-ordered using the _default_ order which has a value of `Integer.MAX_VALUE / 2`. This
-allows `@Order` annotated extension fields to be explicitly ordered before or after
-non-annotated extension fields. Extensions with an explicit order value less than the
-default order value will be registered before non-annotated extensions. Similarly,
-extensions with an explicit order value greater than the default order value will be
-registered after non-annotated extensions. For example, assigning an extension an explicit
-order value that is greater than the default order value allows _before_ callback
-extensions to be registered last and _after_ callback extensions to be registered first,
-relative to other programmatically registered extensions.
-====
 
 [TIP]
 .Extension Inheritance
