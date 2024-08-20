@@ -2767,11 +2767,9 @@ executing tests < configured parallelism 🧠
     ** Solution: Java 9+ & parallel execution strategies (`dynamic`, `fixed` or `custom`) / specify the maximum pool size of the  strategies
 
 [[writing-tests-parallel-execution-config-properties]]
-===== Relevant properties
+===== Relevant properties for configuring parallel execution
 
-* TODO:
-The following table lists relevant properties for configuring parallel execution. See
-<<running-tests-config-params>> for details on how to set such properties.
+* Check <<running-tests-config-params>>
 
 [cols="d,d,a,d"]
 |===
@@ -2799,7 +2797,7 @@ The following table lists relevant properties for configuring parallel execution
 | ```same_thread```
 
 | ```junit.jupiter.execution.parallel.config.strategy```
-| Execution strategy for desired parallelism and maximum pool size
+| Execution parallelism strategy & maximum pool size
 |
   * `dynamic`
   * `fixed`
@@ -2807,16 +2805,14 @@ The following table lists relevant properties for configuring parallel execution
 | ```dynamic```
 
 | ```junit.jupiter.execution.parallel.config.dynamic.factor```
-| Factor to be multiplied by the number of available processors/cores to determine the
-  desired parallelism for the ```dynamic``` configuration strategy
+| * # of available processors/cores = desired parallelism for the ```dynamic``` configuration strategy
 | a positive decimal number
 | ```1.0```
 
 | ```junit.jupiter.execution.parallel.config.dynamic.max-pool-size-factor```
-| Factor to be multiplied by the number of available processors/cores and the value of
-  `junit.jupiter.execution.parallel.config.dynamic.factor` to determine the desired
+| * # of available processors/cores * `junit.jupiter.execution.parallel.config.dynamic.factor` = desired
   parallelism for the ```dynamic``` configuration strategy
-| a positive decimal number, must be greater than or equal to `1.0`
+| a positive decimal number / -- must be -- >= `1.0`
 | 256 + the value of `junit.jupiter.execution.parallel.config.dynamic.factor` multiplied
   by the number of available processors/cores
 
@@ -2836,7 +2832,7 @@ strategy
 | ```junit.jupiter.execution.parallel.config.fixed.max-pool-size```
 | Desired maximum pool size of the underlying fork-join pool for the ```fixed```
   configuration strategy
-| a positive integer, must be greater than or equal to `junit.jupiter.execution.parallel.config.fixed.parallelism`
+| a positive integer / -- must be -- >= `junit.jupiter.execution.parallel.config.fixed.parallelism`
 | 256 + the value of `junit.jupiter.execution.parallel.config.fixed.parallelism`
 
 | ```junit.jupiter.execution.parallel.config.fixed.saturate```
@@ -2848,9 +2844,8 @@ strategy
 | ```true```
 
 | ```junit.jupiter.execution.parallel.config.custom.class```
-| Fully qualified class name of the _ParallelExecutionConfigurationStrategy_ to be
-  used for the ```custom``` configuration strategy
-| for example, _org.example.CustomStrategy_
+| == Fully qualified class name of the _ParallelExecutionConfigurationStrategy_ for the ```custom``` configuration strategy
+| _Example:_ _org.example.CustomStrategy_
 | no default value
 |===
 
