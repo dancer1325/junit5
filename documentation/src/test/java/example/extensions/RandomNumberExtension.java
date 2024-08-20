@@ -27,6 +27,13 @@ import org.junit.platform.commons.support.ModifierSupport;
 // end::user_guide[]
 // @formatter:off
 // tag::user_guide[]
+// Generate random numbers / -- can be
+// 1. injected -- |
+// 1.1 field
+// 2.via parameter -- |
+// 2.1 constructor
+// 2.2 test method
+// 2.3 lifecycle method
 class RandomNumberExtension
 		implements BeforeAllCallback, BeforeEachCallback, ParameterResolver {
 

@@ -29,15 +29,17 @@
 
 * allows
     ** registering >= 1 extensions
-* `@ExtendWith(classReference1, classReference2, ...)` |
-    ** test interface,
-    ** test class,
-    ** test method,
-    ** custom _<<writing-tests-meta-annotations,composed annotation>>_
-    ** test class constructors' fields or parameters
-        *** from JUnit Jupiter v5.8+
-    ** lifecycle methods -- `@BeforeAll`, `@AfterAll`, `@BeforeEach`, and `@AfterEach` --
-        *** from JUnit Jupiter v5.8+
+* `@ExtendWith(classReference1, classReference2, ...)`
+    ** |
+        *** test interface,
+        *** test class,
+        *** test method,
+        *** custom _<<writing-tests-meta-annotations,composed annotation>>_
+        *** test class constructors' fields or parameters
+            **** from JUnit Jupiter v5.8+
+        *** lifecycle methods -- `@BeforeAll`, `@AfterAll`, `@BeforeEach`, and `@AfterEach` --
+            **** from JUnit Jupiter v5.8+
+    ** 👁️ there is a registration order -- based on -- declaration | source code 👁️
 
 * _Example1:_ let's `WebServerExtension` / starts a local web server & injects the server's URL | parameters / -- annotated with -- `@WebServerUrl`
     ** _Example1.1:_ register a `WebServerExtension` | test method
@@ -63,12 +65,13 @@ class MyTests {
 }
 ----
 
-* _Example2:_ register multiple extensions
+* _Example2:_ register multiple extensions, -- taking in account the -- order declaration
     ** _Example2.1:_ together
 
 [source,java,indent=0]
 ----
 @ExtendWith({ DatabaseExtension.class, WebServerExtension.class })
+// extension orderly DatabaseExtension and WebServerExtension
 class MyFirstTests {
 	// ...
 }
@@ -80,25 +83,36 @@ class MyFirstTests {
 ----
 @ExtendWith(DatabaseExtension.class)
 @ExtendWith(WebServerExtension.class)
+// extension orderly DatabaseExtension and WebServerExtension
 class MySecondTests {
 	// ...
 }
 ----
 
-* TODO:
-[TIP]
-.Extension Registration Order
-====
-Extensions registered declaratively via `@ExtendWith` at the class level, method level, or
-parameter level will be executed in the order in which they are declared in the source
-code. For example, the execution of tests in both `MyFirstTests` and `MySecondTests` will
-be extended by the `DatabaseExtension` and `WebServerExtension`, **in exactly that order**.
-====
+* _Example3:_ register extension | field or parameter level
 
-If you wish to combine multiple extensions in a reusable way, you can define a custom
-_<<writing-tests-meta-annotations,composed annotation>>_ and use `@ExtendWith` as a
-_meta-annotation_ as in the following code listing. Then `@DatabaseAndWebServerExtension`
-can be used in place of `@ExtendWith({ DatabaseExtension.class, WebServerExtension.class })`.
+[source,java,indent=0]
+----
+include::{testDir}/example/extensions/Random.java[tags=user_guide]
+----
+
+[source,java,indent=0]
+----
+include::{testDir}/example/extensions/RandomNumberExtension.java[tags=user_guide]
+----
+
+[source,java,indent=0]
+----
+include::{testDir}/example/extensions/RandomNumberDemo.java[tags=user_guide]
+----
+
+[[extensions-RandomNumberExtension]]
+
+* Composed annotation / use `@ExtendWith` as _meta-annotation_
+    ** allows
+        *** 👁️ multiple extensions -- are combined in a -- reusable way 👁️
+    ** Check _<<writing-tests-meta-annotations,composed annotation>>_
+    ** _Example:_ `@ExtendWith({ DatabaseExtension.class, WebServerExtension.class })` -- is replaced by -- `@DatabaseAndWebServerExtension`
 
 [source,java,indent=0]
 ----
@@ -109,38 +123,8 @@ public @interface DatabaseAndWebServerExtension {
 }
 ----
 
-The above examples demonstrate how `@ExtendWith` can be applied at the class level or at
-the method level; however, for certain use cases it makes sense for an extension to be
-registered declaratively at the field or parameter level. Consider a
-`RandomNumberExtension` which generates random numbers that can be injected into a field or
-via a parameter in a constructor, test method, or lifecycle method. If the extension
-provides a `@Random` annotation that is meta-annotated with
-`@ExtendWith(RandomNumberExtension.class)` (see listing below), the extension can be used
-transparently as in the following `RandomNumberDemo` example.
 
-[source,java,indent=0]
-----
-include::{testDir}/example/extensions/Random.java[tags=user_guide]
-----
-
-[source,java,indent=0]
-----
-include::{testDir}/example/extensions/RandomNumberDemo.java[tags=user_guide]
-----
-
-[[extensions-RandomNumberExtension]]
-The following code listing provides an example of how one might choose to implement such a
-`RandomNumberExtension`. This implementation works for the use cases in
-`RandomNumberDemo`; however, it may not prove robust enough to cover all use cases -- for
-example, the random number generation support is limited to integers; it uses
-`java.util.Random` instead of `java.security.SecureRandom`; etc. In any case, it is
-important to note which extension APIs are implemented and for what reasons.
-
-Specifically, `RandomNumberExtension` implements the following extension APIs:
-
-- `BeforeAllCallback`: to support static field injection
-- `BeforeEachCallback`: to support non-static field injection
-- `ParameterResolver`: to support constructor and method injection
+* TODO:
 
 [NOTE]
 ====
