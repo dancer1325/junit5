@@ -4,31 +4,43 @@
 [[extensions-overview]]
 === Overview
 
-In contrast to the competing `Runner`, `TestRule`, and `MethodRule` extension points in
-JUnit 4, the JUnit Jupiter extension model consists of a single, coherent concept: the
-`Extension` API. Note, however, that `Extension` itself is just a marker interface.
+* extension model
+    ** | JUnit 4
+        *** `Runner`,
+        *** `TestRule`,
+        *** `MethodRule`
+    ** | JUnit Jupiter
+        *** `Extension` API
+            **** == 1! concept == `Extension` interface
 
 [[extensions-registration]]
 === Registering Extensions
 
-Extensions can be registered _declaratively_ via
-<<extensions-registration-declarative,`@ExtendWith`>>, _programmatically_ via
-<<extensions-registration-programmatic,`@RegisterExtension`>>, or _automatically_ via
-Java's <<extensions-registration-automatic,`ServiceLoader`>> mechanism.
+* ways to register
+    ** _declaratively_
+        *** -- via -- <<extensions-registration-declarative,`@ExtendWith`>>
+    ** _programmatically_
+        *** -- via -- <<extensions-registration-programmatic,`@RegisterExtension`>>
+    ** _automatically_
+        *** -- via -- Java's <<extensions-registration-automatic,`ServiceLoader`>> mechanism
 
 [[extensions-registration-declarative]]
 ==== Declarative Extension Registration
 
-Developers can register one or more extensions _declaratively_ by annotating a test
-interface, test class, test method, or custom _<<writing-tests-meta-annotations,composed
-annotation>>_ with `@ExtendWith(...)` and supplying class references for the extensions to
-register. As of JUnit Jupiter 5.8, `@ExtendWith` may also be declared on fields or on
-parameters in test class constructors, in test methods, and in `@BeforeAll`, `@AfterAll`,
-`@BeforeEach`, and `@AfterEach` lifecycle methods.
+* allows
+    ** registering >= 1 extensions
+* `@ExtendWith(classReference1, classReference2, ...)` |
+    ** test interface,
+    ** test class,
+    ** test method,
+    ** custom _<<writing-tests-meta-annotations,composed annotation>>_
+    ** test class constructors' fields or parameters
+        *** from JUnit Jupiter v5.8+
+    ** lifecycle methods -- `@BeforeAll`, `@AfterAll`, `@BeforeEach`, and `@AfterEach` --
+        *** from JUnit Jupiter v5.8+
 
-For example, to register a `WebServerExtension` for a particular test method, you would
-annotate the test method as follows. We assume the `WebServerExtension` starts a local web
-server and injects the server's URL into parameters annotated with `@WebServerUrl`.
+* _Example1:_ let's `WebServerExtension` / starts a local web server & injects the server's URL | parameters / -- annotated with -- `@WebServerUrl`
+    ** _Example1.1:_ register a `WebServerExtension` | test method
 
 [source,java,indent=0]
 ----
@@ -41,8 +53,7 @@ void getProductList(@WebServerUrl String serverUrl) {
 }
 ----
 
-To register the `WebServerExtension` for all tests in a particular class and its
-subclasses, you would annotate the test class as follows.
+    ** _Example1.2:_ register the `WebServerExtension` | specific class -> ALL class' & subclass' tests
 
 [source,java,indent=0]
 ----
@@ -52,7 +63,8 @@ class MyTests {
 }
 ----
 
-Multiple extensions can be registered together like this:
+* _Example2:_ register multiple extensions
+    ** _Example2.1:_ together
 
 [source,java,indent=0]
 ----
@@ -62,7 +74,7 @@ class MyFirstTests {
 }
 ----
 
-As an alternative, multiple extensions can be registered separately like this:
+    ** _Example2.2:_ separately
 
 [source,java,indent=0]
 ----
@@ -73,6 +85,7 @@ class MySecondTests {
 }
 ----
 
+* TODO:
 [TIP]
 .Extension Registration Order
 ====
