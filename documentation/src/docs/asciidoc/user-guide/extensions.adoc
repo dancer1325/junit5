@@ -47,7 +47,7 @@
             **** by default, it's ordered -- via an -- algorithm /
                 ***** is deterministic BUT intentionally nonobvious
                 ***** ALL runs of a test suite execute extensions / SAME order
-**** -- can be ordered via -- `@Order`
+            **** -- can be ordered via -- `@Order`
                 ***** Check <<extensions-registration-programmatic-order, Extension Registration Order>>
     ** -- NOT supported to register --  `TestInstancePostProcessor` | NON-static field
         *** Check link:{junit5-repo}/issues/3437[issue 3437]
@@ -160,24 +160,16 @@ public @interface DatabaseAndWebServerExtension {
                     ***** registered AFTER NON-annotated extensions
                     ***** _after_ callback extensions -- are registered -- first
                     ***** _before_ callback extensions -- are registered -- last
-
-* TODO:
-
-[TIP]
-.Extension Inheritance
-====
-Extensions registered via `@RegisterExtension` or `@ExtendWith` on fields in superclasses
-will be inherited.
-
-See <<extensions-registration-inheritance, Extension Inheritance>> for details.
-====
-
-NOTE: `@RegisterExtension` fields must not be `null` (at evaluation time) but may be
-either `static` or non-static.
+    ** extensions | superclasses' fields -- will be -- inherited
+        *** Check <<extensions-registration-inheritance, Extension Inheritance>>
+    ** 's fields
+        *** must NOT be `null`
+        *** -- may be -- `static` or NON-static
 
 [[extensions-registration-programmatic-static-fields]]
 ===== Static Fields
 
+* TODO:
 If a `@RegisterExtension` field is `static`, the extension will be registered after
 extensions that are registered at the class level via `@ExtendWith`. Such _static
 extensions_ are not limited in which extension APIs they can implement. Extensions
