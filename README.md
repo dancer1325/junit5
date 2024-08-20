@@ -70,12 +70,14 @@ task outputs from previous CI builds.
 
 ## Building from Source
 
-You need [JDK 21] to build JUnit 5. [Gradle toolchains] are used to detect and
-potentially download additional JDKs for compilation and test execution.
-
-All modules can be _built_ and _tested_ with the [Gradle Wrapper] using the following command.
-
-`./gradlew build`
+* requirements
+  * [JDK 21] 
+* how does it work?
+  * [Gradle toolchains] 
+    * detect
+    * potentially download additional JDKs
+* ALL modules can be _built_ and _tested_ -- via -- the [Gradle Wrapper]
+    * `./gradlew build`
 
 ## Installing in Local Maven Repository
 
