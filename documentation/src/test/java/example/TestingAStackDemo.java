@@ -39,6 +39,7 @@ class TestingAStackDemo {
 	@DisplayName("when new")
 	class WhenNew {
 
+		// if you define in this lifecycle method -> scope is same level & ALL children levels
 		@BeforeEach
 		void createNewStack() {
 			stack = new Stack<>();

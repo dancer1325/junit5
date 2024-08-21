@@ -977,42 +977,32 @@ build server. It is therefore recommended to change the default in the JUnit Pla
 configuration file instead of via a JVM system property.
 
 [[writing-tests-nested]]
-=== Nested Tests
+=== Nested Tests - @Nested
 
-`@Nested` tests give the test writer more capabilities to express the relationship among
-several groups of tests. Such nested tests make use of Java's nested classes and
-facilitate hierarchical thinking about the test structure. Here's an elaborate example,
-both as source code and as a screenshot of the execution within an IDE.
+* allows
+    ** expressing the relationship among several groups of tests
+* how does it work?
+    ** use Java's nested classes / full lifecycle support
+        *** EXCEPT to, if Java < v16, for `@BeforeAll` and `@AfterAll`
+            **** Reason: 🧠 Java does NOT allow `static` members | inner classes  🧠
+            **** workaround: `@Nested` + `@TestInstance(Lifecycle.PER_CLASS)` | test class -- Check <<writing-tests-test-instance-lifecycle>> --
+        *** From Java v16+ -> `@BeforeAll` and `@AfterAll` -- must be declared as -- `static`
+* _Example:_
 
-[source,java,indent=0]
-.Nested test suite for testing a stack
-----
-include::{testDir}/example/TestingAStackDemo.java[tags=user_guide]
-----
+    [source,java,indent=0]
+    .Nested test suite for testing a stack
+    ----
+    include::{testDir}/example/TestingAStackDemo.java[tags=user_guide]
+    ----
 
-When executing this example in an IDE, the test execution tree in the GUI will look
-similar to the following image.
+    ** test execution | IDE -> looks like a tree in the GUI
 
 image::writing-tests_nested_test_ide.png[caption='',title='Executing a nested test in an IDE']
 
-In this example, preconditions from outer tests are used in inner tests by defining
-hierarchical lifecycle methods for the setup code. For example, `createNewStack()` is a
-`@BeforeEach` lifecycle method that is used in the test class in which it is defined and
-in all levels in the nesting tree below the class in which it is defined.
-
-The fact that setup code from outer tests is run before inner tests are executed gives you
-the ability to run all tests independently. You can even run inner tests alone without
-running the outer tests, because the setup code from the outer tests is always executed.
-
-NOTE: _Only non-static nested classes_ (i.e. _inner classes_) can serve as `@Nested` test
-classes. Nesting can be arbitrarily deep, and those inner classes are subject to full
-lifecycle support with one exception: `@BeforeAll` and `@AfterAll` methods do not work _by
-default_. The reason is that Java does not allow `static` members in inner classes prior
-to Java 16. However, this restriction can be circumvented by annotating a `@Nested` test
-class with `@TestInstance(Lifecycle.PER_CLASS)` (see
-<<writing-tests-test-instance-lifecycle>>). If you are using Java 16 or higher,
-`@BeforeAll` and `@AfterAll` methods can be declared as `static` in `@Nested` test
-classes, and this restriction no longer applies.
+* setup code from outer tests -- is run before -- inner tests
+* requirements to be a `@Nested` test class
+    ** NON-static nested class == inner class
+* Nesting can be arbitrarily deep
 
 [[writing-tests-dependency-injection]]
 === Dependency Injection for Constructors and Methods
