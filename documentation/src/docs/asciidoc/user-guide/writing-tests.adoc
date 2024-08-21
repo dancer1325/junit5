@@ -108,10 +108,13 @@ void myFastTest() {
 .Platform Concepts
 ****
 Container::
-a node in the test tree that contains other containers or tests as its children (e.g. a _test class_).
+* := node | test tree / contains other
+    ** containers OR
+    ** tests as its children -- _Example:_ _test class_
 
 Test::
-a node in the test tree that verifies expected behavior when executed (e.g. a `@Test` method).
+* := node | test tree / once it's executed -> verify expected behavior
+    ** _Example:_ `@Test` method
 ****
 
 .Jupiter Concepts
@@ -121,9 +124,12 @@ any method that is directly annotated or meta-annotated with
 `@BeforeAll`, `@AfterAll`, `@BeforeEach`, or `@AfterEach`.
 
 Test Class::
-any top-level class, `static` member class, or <<writing-tests-nested,
-`@Nested` class>> that contains at least one _test method_, i.e. a _container_.
-Test classes must not be `abstract` and must have a single constructor.
+* := top-level class OR `static` member class OR <<writing-tests-nested,
+`@Nested` class>> / contains >=1 _test method_
+    ** == _container_
+    ** requirements
+        *** NOT be `abstract`
+        *** have a 1 constructor
 
 Test Method::
 any instance method that is directly annotated or meta-annotated with
@@ -777,12 +783,12 @@ custom annotations for tags.
 
 * Test classes & methods -- are 👁️ordered 👁️ via -- deterministic algorithm, BUT NOT obvious
     ** -> 👁ALL runs of test suite execute test classes & methods in the SAME order 👁
-
-NOTE: See <<writing-tests-definitions>> for a definition of _test method_ and _test class_.
+    ** Check <<writing-tests-definitions>>
 
 [[writing-tests-test-execution-order-methods]]
 ==== Method Order
 
+* TODO:
 Although true _unit tests_ typically should not rely on the order in which they are
 executed, there are times when it is necessary to enforce a specific test method execution
 order -- for example, when writing _integration tests_ or _functional tests_ where the
