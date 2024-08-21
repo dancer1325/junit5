@@ -798,35 +798,32 @@ custom annotations for tags.
 [[writing-tests-test-execution-order-methods]]
 ==== Method Order
 
-* TODO:
-Although true _unit tests_ typically should not rely on the order in which they are
-executed, there are times when it is necessary to enforce a specific test method execution
-order -- for example, when writing _integration tests_ or _functional tests_ where the
-sequence of the tests is important, especially in conjunction with
-`@TestInstance(Lifecycle.PER_CLASS)`.
-
-To control the order in which test methods are executed, annotate your test class or test
-interface with `{TestMethodOrder}` and specify the desired `{MethodOrderer}`
-implementation. You can implement your own custom `MethodOrderer` or use one of the
-following built-in `MethodOrderer` implementations.
-
-* `{MethodOrderer_DisplayName}`: sorts test methods _alphanumerically_ based on their
-  display names (see <<writing-tests-display-name-generator-precedence-rules, display name
-  generation precedence rules>>)
-* `{MethodOrderer_MethodName}`: sorts test methods _alphanumerically_ based on their names
-  and formal parameter lists
-* `{MethodOrderer_OrderAnnotation}`: sorts test methods _numerically_ based on values
-  specified via the `{Order}` annotation
-* `{MethodOrderer_Random}`: orders test methods _pseudo-randomly_ and supports
+* true _unit tests_
+    ** 👁️ should NOT rely on the order / they are executed 👁️
+* use cases
+    ** writing _integration tests_ or _functional tests_ / sequence of the tests is important
+    ** previous + `@TestInstance(Lifecycle.PER_CLASS)`
+* `{TestMethodOrder}` & `{MethodOrderer}` | test class or test interface
+    ** allowed `{MethodOrderer}`
+        *** create your own custom one
+        *** built-in implementations
+            **** `{MethodOrderer_DisplayName}`
+                ***** sorts test methods _alphanumerically_ -- based on -- their
+display names
+                ***** Check <<writing-tests-display-name-generator-precedence-rules, display name generation precedence rules>>
+            **** `{MethodOrderer_MethodName}`
+                ***** sorts test methods _alphanumerically_ -- based on -- their names & formal parameter lists
+            **** `{MethodOrderer_OrderAnnotation}`
+                ***** sorts test methods _numerically_ -- based on -- values specified via `{Order}` annotation
+            **** `{MethodOrderer_Random}`
+                ***** sort orders test methods _pseudo-randomly_ / -- supports --
   configuration of a custom _seed_
-* `{MethodOrderer_Alphanumeric}`: sorts test methods _alphanumerically_ based on their
-  names and formal parameter lists; **deprecated in favor of `{MethodOrderer_MethodName}`,
-  to be removed in 6.0**
-
-NOTE: See also: <<extensions-execution-order-wrapping-behavior>>
-
-The following example demonstrates how to guarantee that test methods are executed in the
-order specified via the `@Order` annotation.
+            **** `{MethodOrderer_Alphanumeric}`
+                *****  **deprecated -- in favor of -- `{MethodOrderer_MethodName}`/ will be removed | 6.0**
+                ***** sorts test methods _alphanumerically_ -- based on their --
+  names & formal parameter lists
+    ** Check <<extensions-execution-order-wrapping-behavior>>
+    ** _Example:_
 
 [source,java,indent=0]
 ----
@@ -836,6 +833,7 @@ include::{testDir}/example/OrderedTestsDemo.java[tags=user_guide]
 [[writing-tests-test-execution-order-methods-default]]
 ===== Setting the Default Method Orderer
 
+* TODO:
 You can use the `junit.jupiter.testmethod.order.default` <<running-tests-config-params,
 configuration parameter>> to specify the fully qualified class name of the
 `{MethodOrderer}` you would like to use by default. Just like for the orderer configured
