@@ -120,8 +120,11 @@ Test::
 .Jupiter Concepts
 ****
 Lifecycle Method::
-any method that is directly annotated or meta-annotated with
-`@BeforeAll`, `@AfterAll`, `@BeforeEach`, or `@AfterEach`.
+* := method / directly annotated or meta-annotated with
+    ** `@BeforeAll`
+    ** `@AfterAll`,
+    ** `@BeforeEach`
+    ** `@AfterEach`
 
 Test Class::
 * := top-level class OR `static` member class OR <<writing-tests-nested,
@@ -132,10 +135,17 @@ Test Class::
         *** have a 1 constructor
 
 Test Method::
-any instance method that is directly annotated or meta-annotated with
-`@Test`, `@RepeatedTest`, `@ParameterizedTest`, `@TestFactory`, or `@TestTemplate`.
-With the exception of `@Test`, these create a _container_ in the test tree that groups
-_tests_ or, potentially (for `@TestFactory`), other _containers_.
+* := instance method / directly annotated or meta-annotated with
+    ** `@Test`,
+        *** ⚠️ NOT create a container | test tree ⚠️
+    ** `@RepeatedTest`,
+        *** create a container | test tree
+    ** `@ParameterizedTest`,
+        *** create a container | test tree
+    ** `@TestFactory`,
+        *** create a container | test tree
+    ** `@TestTemplate`
+        *** create a container | test tree
 ****
 
 [[writing-tests-classes-and-methods]]
