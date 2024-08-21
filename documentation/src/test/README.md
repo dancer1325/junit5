@@ -10,4 +10,8 @@
         * Problems:
           * Problem1: same as ALL before
   * Gradle
+    * TODO:
+  * IDE
+    * Problems:
+      * Problem1:
 * TODO:
