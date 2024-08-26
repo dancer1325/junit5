@@ -2860,19 +2860,17 @@ strategy
 [[writing-tests-parallel-execution-synchronization]]
 ==== Synchronization
 
-In addition to controlling the execution mode using the `{Execution}` annotation, JUnit
-Jupiter provides another annotation-based declarative synchronization mechanism. The
-`{ResourceLock}` annotation allows you to declare that a test class or method uses a
-specific shared resource that requires synchronized access to ensure reliable test
-execution. The shared resource is identified by a unique name which is a `String`. The
-name can be user-defined or one of the predefined constants in `{Resources}`:
-`SYSTEM_PROPERTIES`, `SYSTEM_OUT`, `SYSTEM_ERR`, `LOCALE`, or `TIME_ZONE`.
-
-If the tests in the following example were run in parallel _without_ the use of
-{ResourceLock}, they would be _flaky_. Sometimes they would pass, and at other times they
-would fail due to the inherent race condition of writing and then reading the same JVM
-System Property.
-
+* `{ResourceLock}`
+    ** := another synchronization mechanism /
+        *** == test class OR method -- uses a -- specific shared resource /
+            **** -- requires -- synchronized access
+            **** -- is identified by an -- unique name / can be
+                ***** user-defined OR
+                ***** predefined constants | `{Resources}`
+                    ****** _Example:_ `SYSTEM_PROPERTIES`, `SYSTEM_OUT`, `SYSTEM_ERR`, `LOCALE`, or `TIME_ZONE`
+    ** if tests run in parallel & NOT {ResourceLock} ->  _flaky_ test
+        *** _flaky_ test == sometimes pass & then fail / -- due to -- writing and reading | same JVM's System Property
+* TODO:
 When access to shared resources is declared using the `{ResourceLock}` annotation, the
 JUnit Jupiter engine uses this information to ensure that no conflicting tests are run in
 parallel. This guarantee extends to lifecycle methods of a test class or method. For
