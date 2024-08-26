@@ -48,6 +48,7 @@ class SharedResourcesDemo {
 		assertNull(System.getProperty("my.prop"));
 	}
 
+	// Problems could happen because `READ_WRITE` access mode a shared resource
 	@Test
 	@ResourceLock(value = SYSTEM_PROPERTIES, mode = READ_WRITE)
 	void canSetCustomPropertyToApple() {
