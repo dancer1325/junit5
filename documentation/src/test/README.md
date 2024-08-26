@@ -10,7 +10,8 @@
         * Problems:
           * Problem1: same as ALL before
   * Gradle
-    * TODO:
+    * `./gradlew test` -- run ALL --
+    * TODO: How to run in debug mode specific ones?
   * IDE
     * Problems:
       * Problem1:
