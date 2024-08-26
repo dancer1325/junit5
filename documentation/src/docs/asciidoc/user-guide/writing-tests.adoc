@@ -1368,56 +1368,56 @@ When using the `ConsoleLauncher` with the unicode theme enabled, execution of
 
 
 [[writing-tests-parameterized-tests]]
-=== Parameterized Tests
+=== Parameterized Tests -- `{ParameterizedTest}` --
 
-Parameterized tests make it possible to run a test multiple times with different
-arguments. They are declared just like regular `@Test` methods but use the
-`{ParameterizedTest}` annotation instead. In addition, you must declare at least one
-_source_ that will provide the arguments for each invocation and then _consume_ the
-arguments in the test method.
+* allows
+    ** run 1 test multiple times / different arguments
+* requirements
+    ** declare >= 1 _source_ /
+        *** arguments / invocation
+        ***  _consume_ / test method
+        *** _Example:_ `@ValueSource` / ALL possible properties or arguments are arrays
 
-The following example demonstrates a parameterized test that uses the `@ValueSource`
-annotation to specify a `String` array as the source of arguments.
+    [source,java,indent=0]
+    ----
+    include::{testDir}/example/ParameterizedTestDemo.java[tags=first_example]
+    ----
 
-[source,java,indent=0]
-----
-include::{testDir}/example/ParameterizedTestDemo.java[tags=first_example]
-----
+* 1 separately execution test repot / invocation
+    ** _Example:_
 
-When executing the above parameterized test method, each invocation will be reported
-separately. For instance, the `ConsoleLauncher` will print output similar to the
-following.
-
-....
-palindromes(String) ✔
-├─ [1] candidate=racecar ✔
-├─ [2] candidate=radar ✔
-└─ [3] candidate=able was I ere I saw elba ✔
-....
+    ....
+    palindromes(String) ✔
+    ├─ [1] candidate=racecar ✔
+    ├─ [2] candidate=radar ✔
+    └─ [3] candidate=able was I ere I saw elba ✔
+    ....
 
 [[writing-tests-parameterized-tests-setup]]
 ==== Required Setup
 
-In order to use parameterized tests you need to add a dependency on the
-`junit-jupiter-params` artifact. Please refer to <<dependency-metadata>> for details.
+* add a dependency | `junit-jupiter-params` artifact
+    ** Check <<dependency-metadata>>
 
 [[writing-tests-parameterized-tests-consuming-arguments]]
 ==== Consuming Arguments
 
-Parameterized test methods typically _consume_ arguments directly from the configured
-source (see <<writing-tests-parameterized-tests-sources>>) following a one-to-one
-correlation between argument source index and method parameter index (see examples in
-<<writing-tests-parameterized-tests-sources-CsvSource>>). However, a parameterized test
-method may also choose to _aggregate_ arguments from the source into a single object
-passed to the method (see <<writing-tests-parameterized-tests-argument-aggregation>>).
-Additional arguments may also be provided by a `ParameterResolver` (e.g., to obtain an
-instance of `TestInfo`, `TestReporter`, etc.). Specifically, a parameterized test method
-must declare formal parameters according to the following rules.
+* Parameterized test methods' allowed _consume_ arguments
+    ** directly -- from the -- configured source
+        *** Check <<writing-tests-parameterized-tests-sources>>)
+        *** 1to1 : argument source index -- method parameter index
+        *** _Examples:_ <<writing-tests-parameterized-tests-sources-CsvSource>>)
+    ** _aggregate_ arguments -- from the -- source | 1! object /
+        *** can be
+            **** -- passed to the -- method OR
+            **** -- provided by -- `ParameterResolver`
+        *** Check <<writing-tests-parameterized-tests-argument-aggregation>>)
+* rules to declare formal parameters / order must be
+    ** >=0 _indexed arguments_
+    ** >=0 _aggregators_
+    ** >=0 arguments supplied by a `ParameterResolver`
 
-* Zero or more _indexed arguments_ must be declared first.
-* Zero or more _aggregators_ must be declared next.
-* Zero or more arguments supplied by a `ParameterResolver` must be declared last.
-
+* TODO:
 In this context, an _indexed argument_ is an argument for a given index in the
 `Arguments` provided by an `ArgumentsProvider` that is passed as an argument to the
 parameterized method at the same index in the method's formal parameter list. An
