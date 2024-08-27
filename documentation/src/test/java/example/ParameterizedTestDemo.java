@@ -170,6 +170,7 @@ class ParameterizedTestDemo {
 		assertNotNull(argument);
 	}
 
+	// Stream<String>	==  	Stream<Objects>
 	static Stream<String> stringProvider() {
 		return Stream.of("apple", "banana");
 	}
@@ -177,7 +178,7 @@ class ParameterizedTestDemo {
 
 	// tag::simple_MethodSource_without_value_example[]
 	@ParameterizedTest
-	@MethodSource
+	@MethodSource // NO name provided -> look for by the method name -- testWithDefaultLocalMethodSource | this case --
 	void testWithDefaultLocalMethodSource(String argument) {
 		assertNotNull(argument);
 	}

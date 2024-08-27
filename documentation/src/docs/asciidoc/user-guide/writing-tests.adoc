@@ -1375,7 +1375,7 @@ When using the `ConsoleLauncher` with the unicode theme enabled, execution of
 * requirements
     ** declare >= 1 _source_ /
         *** arguments / invocation
-        ***  _consume_ / test method
+        *** _consume_ / test method
         *** _Example:_ `@ValueSource` / ALL possible properties or arguments are arrays
 
     [source,java,indent=0]
@@ -1404,7 +1404,7 @@ When using the `ConsoleLauncher` with the unicode theme enabled, execution of
 
 * Parameterized test methods' allowed _consume_ arguments
     ** directly -- from the -- configured source
-        *** Check <<writing-tests-parameterized-tests-sources>>)
+        *** Check <<writing-tests-parameterized-tests-sources>>
         *** 1to1 : argument source index -- method parameter index
         *** _Examples:_ <<writing-tests-parameterized-tests-sources-CsvSource>>)
     ** _aggregate_ arguments -- from the -- source | 1! object /
@@ -1416,40 +1416,31 @@ When using the `ConsoleLauncher` with the unicode theme enabled, execution of
     ** >=0 _indexed arguments_
     ** >=0 _aggregators_
     ** >=0 arguments supplied by a `ParameterResolver`
-
-* TODO:
-In this context, an _indexed argument_ is an argument for a given index in the
-`Arguments` provided by an `ArgumentsProvider` that is passed as an argument to the
-parameterized method at the same index in the method's formal parameter list. An
-_aggregator_ is any parameter of type `ArgumentsAccessor` or any parameter annotated with
-`@AggregateWith`.
-
-[NOTE]
-.AutoCloseable arguments
-====
-Arguments that implement `java.lang.AutoCloseable` (or `java.io.Closeable` which extends
-`java.lang.AutoCloseable`) will be automatically closed after `@AfterEach` methods and
-`AfterEachCallback` extensions have been called for the current parameterized test
-invocation.
-
-To prevent this from happening, set the `autoCloseArguments` attribute in
-`@ParameterizedTest` to `false`. Specifically, if an argument that implements
-`AutoCloseable` is reused for multiple invocations of the same parameterized test method,
-you must annotate the method with `@ParameterizedTest(autoCloseArguments = false)` to
-ensure that the argument is not closed between invocations.
-====
+* _indexed argument_
+    ** := argument / given index | `Arguments` -- provided by an -- `ArgumentsProvider`
+        *** -- passed as an -- argument to the parameterized method
+        *** index == index | method's formal parameter list
+* _aggregator_
+    ** := ANY parameter of type `ArgumentsAccessor` or ANY parameter / annotated with `@AggregateWith`
+* AutoCloseable arguments
+    ** == arguments / implement `java.lang.AutoCloseable` (or `java.io.Closeable` & extends `java.lang.AutoCloseable`)
+        *** automatically closed | after calling `@AfterEach` methods and
+`AfterEachCallback` | current parameterized test
+    ** `@ParameterizedTest(autoCloseArguments=false)`
+        *** prevent the closure automatically
+        *** uses
+            **** argument / implements `AutoCloseable` & reused  multiple invocations of the same parameterized test method
+                ***** Reason: 🧠 -> argument is NOT closed between invocations 🧠
 
 [[writing-tests-parameterized-tests-sources]]
 ==== Sources of Arguments
 
-Out of the box, JUnit Jupiter provides quite a few _source_ annotations. Each of the
-following subsections provides a brief overview and an example for each of them. Please
-refer to the Javadoc in the `{params-provider-package}` package for additional
-information.
+* built-in _source_ annotations
+    ** Check next subsections & `{params-provider-package}`
 
 [[writing-tests-parameterized-tests-sources-ValueSource]]
 ===== @ValueSource
-
+* TODO:
 `@ValueSource` is one of the simplest possible sources. It lets you specify a single
 array of literal values and can only be used for providing a single argument per
 parameterized test invocation.
@@ -1570,49 +1561,50 @@ include::{testDir}/example/ParameterizedTestDemo.java[tags=EnumSource_regex_exam
 [[writing-tests-parameterized-tests-sources-MethodSource]]
 ===== @MethodSource
 
-`{MethodSource}` allows you to refer to one or more _factory_ methods of the test class
-or external classes.
+* allows
+    ** referring to >=1 _factory_ methods | test class or external classes
+        *** Factory methods | test class
+            **** if test class NOT annotated with `@TestInstance(Lifecycle.PER_CLASS)` -> must be `static`
+        *** factory methods | external classes
+            **** must ALWAYS be `static`
+* return a _stream_ of _arguments_
+    ** _stream_ | JUnit == ANYTHING / JUnit -- can convert into a -- `Stream`
+        *** `Stream<Arguments>`
+        *** `DoubleStream<Arguments>`
+        *** `LongStream<Arguments>`
+        *** `IntStream<Arguments>`
+        *** `Collection<Arguments>`
+        *** `Iterator<Arguments>`
+        *** `Iterable<Arguments>`
+        *** `Object[]`
+        *** `Primitives[]`
+        *** `Stream<Primitives>`
+            **** -> 1! simple argument / invocation
 
-Factory methods within the test class must be `static` unless the test class is annotated
-with `@TestInstance(Lifecycle.PER_CLASS)`; whereas, factory methods in external classes
-must always be `static`.
+            [source,java,indent=0]
+            ----
+            include::{testDir}/example/ParameterizedTestDemo.java[tags=simple_MethodSource_example]
+            ----
 
-Each factory method must generate a _stream_ of _arguments_, and each set of arguments
-within the stream will be provided as the physical arguments for individual invocations
-of the annotated `@ParameterizedTest` method. Generally speaking this translates to a
-`Stream` of `Arguments` (i.e., `Stream<Arguments>`); however, the actual concrete return
-type can take on many forms. In this context, a "stream" is anything that JUnit can
-reliably convert into a `Stream`, such as `Stream`, `DoubleStream`, `LongStream`,
-`IntStream`, `Collection`, `Iterator`, `Iterable`, an array of objects, or an array of
-primitives. The "arguments" within the stream can be supplied as an instance of
-`Arguments`, an array of objects (e.g., `Object[]`), or a single value if the
-parameterized test method accepts a single argument.
+            [source,java,indent=0]
+            ----
+            include::{testDir}/example/ParameterizedTestDemo.java[tags=primitive_MethodSource_example]
+            ----
 
-If you only need a single parameter, you can return a `Stream` of instances of the
-parameter type as demonstrated in the following example.
-
-[source,java,indent=0]
-----
-include::{testDir}/example/ParameterizedTestDemo.java[tags=simple_MethodSource_example]
-----
-
-If you do not explicitly provide a factory method name via `@MethodSource`, JUnit Jupiter
-will search for a _factory_ method that has the same name as the current
-`@ParameterizedTest` method by convention. This is demonstrated in the following example.
+    ** _arguments_ | JUnit can be
+        *** `Arguments`
+        *** `Object`
+    ** uses
+        *** arguments for individual invocations of the annotated `@ParameterizedTest` method
+* 👁️if you do NOT explicitly provide a factory method name via `@MethodSource` -> JUnit Jupiter
+will search for a _factory_ method / name == `@ParameterizedTest` method 👁️
 
 [source,java,indent=0]
 ----
 include::{testDir}/example/ParameterizedTestDemo.java[tags=simple_MethodSource_without_value_example]
 ----
 
-Streams for primitive types (`DoubleStream`, `IntStream`, and `LongStream`) are also
-supported as demonstrated by the following example.
-
-[source,java,indent=0]
-----
-include::{testDir}/example/ParameterizedTestDemo.java[tags=primitive_MethodSource_example]
-----
-
+* TODO:
 If a parameterized test method declares multiple parameters, you need to return a
 collection, stream, or array of `Arguments` instances or object arrays as shown below
 (see the Javadoc for `{MethodSource}` for further details on supported return types).
