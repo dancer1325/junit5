@@ -833,17 +833,12 @@ include::{testDir}/example/OrderedTestsDemo.java[tags=user_guide]
 [[writing-tests-test-execution-order-methods-default]]
 ===== Setting the Default Method Orderer
 
-* TODO:
-You can use the `junit.jupiter.testmethod.order.default` <<running-tests-config-params,
-configuration parameter>> to specify the fully qualified class name of the
-`{MethodOrderer}` you would like to use by default. Just like for the orderer configured
-via the `{TestMethodOrder}` annotation, the supplied class has to implement the
-`MethodOrderer` interface. The default orderer will be used for all tests unless the
-`@TestMethodOrder` annotation is present on an enclosing test class or test interface.
-
-For example, to use the `{MethodOrderer_OrderAnnotation}` method orderer by default, you
-should set the configuration parameter to the corresponding fully qualified class name
-(e.g., in `src/test/resources/junit-platform.properties`):
+* `junit.jupiter.testmethod.order.default`
+    ** <<running-tests-config-params>> / specify the fully qualified class name of the
+`{MethodOrderer}` / -- has to implement the --
+`MethodOrderer` interface
+    ** apply for ALL test, except to, test class or interface / `@TestMethodOrder` annotation
+* _Example:_ src/test/resources/junit-platform.properties
 
 [source,properties,indent=0]
 ----
@@ -851,12 +846,10 @@ junit.jupiter.testmethod.order.default = \
     org.junit.jupiter.api.MethodOrderer$OrderAnnotation
 ----
 
-Similarly, you can specify the fully qualified name of any custom class that implements
-`MethodOrderer`.
-
 [[writing-tests-test-execution-order-classes]]
 ==== Class Order
 
+* TODO:
 Although test classes typically should not rely on the order in which they are executed,
 there are times when it is desirable to enforce a specific test class execution order. You
 may wish to execute test classes in a random order to ensure there are no accidental
