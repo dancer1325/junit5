@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 @RunWith(org.junit.platform.runner.JUnitPlatform.class)
 @SuiteDisplayName("JUnit Platform Suite Demo")
 @SelectPackages("example")
+// discover & run ALL tests | `example` package + subpackages / test classes names 1. `Test*`, 2. `*Test` or `*Tests`
 //end::user_guide[]
 @SuppressWarnings("deprecation")
 @org.junit.platform.suite.api.ExcludeTags("exclude")
