@@ -1,9 +1,12 @@
 [[overview]]
 == Overview
 
-The goal of this document is to provide comprehensive reference documentation for
-programmers writing tests, extension authors, and engine authors as well as build tool
-and IDE vendors.
+* goal
+    ** reference documentation for
+        *** writing tests,
+        *** extension authors,
+        *** engine authors
+        *** build tool & IDE vendors
 
 ifdef::backend-html5[]
 ifdef::linkToPdf[]
@@ -14,29 +17,50 @@ endif::backend-html5[]
 [[overview-what-is-junit-5]]
 === What is JUnit 5?
 
-Unlike previous versions of JUnit, JUnit 5 is composed of several different modules from
-three different sub-projects.
+* **JUnit 5 = _JUnit Platform_ + _JUnit Jupiter_ + _JUnit Vintage_**
+    ** previous JUnit -> NOT submodules
+* **JUnit Platform**
+    ** first-class support |
+        *** MOST popular IDEs
+            **** <<running-tests-ide-intellij-idea>>
+            **** <<running-tests-ide-eclipse>>
+            **** <<running-tests-ide-netbeans>>
+            **** <<running-tests-ide-vscode>>
+        *** build tools
+            **** <<running-tests-build-gradle>>
+            **** <<running-tests-build-maven>>
+            **** <<running-tests-build-ant>>
+    ** allows
+        *** launching testing frameworks | JVM
+    ** provides
+        *** `{TestEngine}` API
+            **** uses
+                ***** develop a testing framework / runs | platform
+        *** <<running-tests-console-launcher,Console Launcher>>
+            **** uses
+                ***** launch the platform -- from the -- CL
+        *** <<junit-platform-suite-engine>>
+            **** uses
+                ***** run custom test suite -- via -- >=1 test engines | platform
 
-**JUnit 5 = _JUnit Platform_ + _JUnit Jupiter_ + _JUnit Vintage_**
+* **JUnit Jupiter**
+    ** == <<writing-tests,programming model>> +
+<<extensions,extension model>>
+    ** uses
+        *** writing tests | JUnit 5
+        *** writing extensions | JUnit 5 The Jupiter
+    ** provides
+        *** `{TestEngine}`
+            **** allows
+                ***** run Jupiter-based tests | JUnit platform
 
-The **JUnit Platform** serves as a foundation for <<launcher-api,launching testing
-frameworks>> on the JVM. It also defines the `{TestEngine}` API for developing a testing
-framework that runs on the platform. Furthermore, the platform provides a
-<<running-tests-console-launcher,Console Launcher>> to launch the platform from the
-command line and the <<junit-platform-suite-engine>> for running a custom test suite using
-one or more test engines on the platform. First-class support for the JUnit Platform also
-exists in popular IDEs (see <<running-tests-ide-intellij-idea>>,
-<<running-tests-ide-eclipse>>, <<running-tests-ide-netbeans>>, and
-<<running-tests-ide-vscode>>) and build tools (see <<running-tests-build-gradle>>,
-<<running-tests-build-maven>>, and <<running-tests-build-ant>>).
-
-**JUnit Jupiter** is the combination of the <<writing-tests,programming model>> and
-<<extensions,extension model>> for writing tests and extensions in JUnit 5. The Jupiter
-sub-project provides a `TestEngine` for running Jupiter based tests on the platform.
-
-**JUnit Vintage** provides a `TestEngine` for running JUnit 3 and JUnit 4 based tests on
-the platform. It requires JUnit 4.12 or later to be present on the class path or module
-path.
+* **JUnit Vintage**
+    ** provides
+        *** `TestEngine`
+            **** allows
+                ***** run JUnit 3 & JUnit 4 -based tests | JUnit platform
+    ** requirements
+        *** JUnit v4.12+ | class path OR module path
 
 [[overview-java-versions]]
 === Supported Java Versions
