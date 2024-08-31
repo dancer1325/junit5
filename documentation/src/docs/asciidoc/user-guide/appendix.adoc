@@ -4,22 +4,20 @@
 [[reproducible-builds]]
 === Reproducible Builds
 
-Starting with version 5.7, JUnit 5 aims for its non-javadoc JARs to be
-https://reproducible-builds.org/[reproducible].
-
-Under identical build conditions, such as Java version, repeated builds should provide the
-same output byte-for-byte.
-
-This means that anyone can reproduce the build conditions of the artifacts on Maven
-Central/Sonatype and produce the same output artifact locally, confirming that the
-artifacts in the repositories were actually generated from this source code.
+* https://reproducible-builds.org/[reproducible] | NON-javadoc .jar
+    ** | JUnit v5.7+
+* == 👁️ repeated builds | identical build conditions (_Example:_ Java version) -- should provide the -- same output byte-for-byte 👁️
+    ** -> if you reproduce the build conditions of the artifacts of Maven
+Central/Sonatype | locally -> same output artifact produced
 
 [[dependency-metadata]]
 === Dependency Metadata
 
-Artifacts for final releases and milestones are deployed to {Maven_Central}, and snapshot
-artifacts are deployed to Sonatype's {snapshot-repo}[snapshots repository] under
-{snapshot-repo}/org/junit/[/org/junit].
+* Artifacts for final releases and milestones
+    ** {Maven_Central}
+* snapshot artifacts
+    ** Sonatype's {snapshot-repo}[snapshots repository] |
+{snapshot-repo}/org/junit/[/org/junit]
 
 [[dependency-metadata-junit-platform]]
 ==== JUnit Platform
@@ -27,46 +25,47 @@ artifacts are deployed to Sonatype's {snapshot-repo}[snapshots repository] under
 * *Group ID*: `org.junit.platform`
 * *Version*: `{platform-version}`
 * *Artifact IDs*:
-  `junit-platform-commons`::
+  ** `junit-platform-commons`::
     Common APIs and support utilities for the JUnit Platform. Any API annotated with
     `@API(status = INTERNAL)` is intended solely for usage within the JUnit framework
     itself. _Any usage of internal APIs by external parties is not supported!_
-  `junit-platform-console`::
+  ** `junit-platform-console`::
     Support for discovering and executing tests on the JUnit Platform from the console.
     See <<running-tests-console-launcher>> for details.
-  `junit-platform-console-standalone`::
+  ** `junit-platform-console-standalone`::
     An executable _Fat JAR_ that contains all dependencies is provided in Maven Central under the
     https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone[junit-platform-console-standalone]
     directory. See <<running-tests-console-launcher>> for details.
-  `junit-platform-engine`::
+  ** `junit-platform-engine`::
     Public API for test engines. See <<launcher-api-engines-custom>> for details.
-  `junit-platform-jfr`::
+  ** `junit-platform-jfr`::
     Provides a `LauncherDiscoveryListener` and `TestExecutionListener` for Java Flight
 	Recorder events on the JUnit Platform. See <<running-tests-listeners-flight-recorder>>
 	for details.
-  `junit-platform-launcher`::
+  ** `junit-platform-launcher`::
     Public API for configuring and launching test plans -- typically used by IDEs and
     build tools. See <<launcher-api>> for details.
-  `junit-platform-reporting`::
+  ** `junit-platform-reporting`::
     `TestExecutionListener` implementations that generate test reports -- typically used
     by IDEs and build tools. See <<junit-platform-reporting>> for details.
-  `junit-platform-runner`::
+  ** `junit-platform-runner`::
     Runner for executing tests and test suites on the JUnit Platform in a JUnit 4
     environment. See <<running-tests-junit-platform-runner>> for details.
-  `junit-platform-suite`::
+  ** `junit-platform-suite`::
     JUnit Platform Suite artifact that transitively pulls in dependencies on
     `junit-platform-suite-api` and `junit-platform-suite-engine` for simplified dependency
 	management in build tools such as Gradle and Maven.
-  `junit-platform-suite-api`::
+  ** `junit-platform-suite-api`::
     Annotations for configuring test suites on the JUnit Platform. Supported by the
     <<junit-platform-suite-engine, JUnit Platform Suite Engine>> and the
     <<running-tests-junit-platform-runner, JUnitPlatform runner>>.
-  `junit-platform-suite-commons`::
+  ** `junit-platform-suite-commons`::
     Common support utilities for executing test suites on the JUnit Platform.
-  `junit-platform-suite-engine`::
-    Engine that executes test suites on the JUnit Platform; only required at runtime. See
-    <<junit-platform-suite-engine,JUnit Platform Suite Engine>> for details.
-  `junit-platform-testkit`::
+  ** `junit-platform-suite-engine`
+    *** == engine / -- executes -- test suites | JUnit Platform
+    *** ONLY required | runtime
+    *** Check <<junit-platform-suite-engine,JUnit Platform Suite Engine>>
+  ** `junit-platform-testkit`::
      Provides support for executing a test plan for a given `TestEngine` and then
      accessing the results via a fluent API to verify the expected results.
 
