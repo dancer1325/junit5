@@ -857,15 +857,12 @@ include::{testDir}/example/JUnitPlatformClassDemo.java[tags=user_guide]
 include::{testDir}/example/JUnitPlatformSuiteDemo.java[tags=user_guide]
 ----
 
-.Additional Configuration Options
-NOTE: There are more configuration options for discovering and filtering tests than just
-`@SelectPackages`. Please consult the Javadoc of the `{suite-api-package}` package for
-further details.
-
-WARNING: Test classes and suites annotated with `@RunWith(JUnitPlatform.class)`
-**cannot** be executed directly on the JUnit Platform (or as a "JUnit 5" test as
-documented in some IDEs). Such classes and suites can only be executed using JUnit 4
-infrastructure.
+* configuration options -- for -- discovering and filtering tests
+    ** check Javadoc of the `{suite-api-package}` package
+    ** _Example:_ `@SelectPackages`
+* if test classes and suites / -- annotated with -- `@RunWith(JUnitPlatform.class)` ->
+    ** can NOT be executed directly | JUnit Platform (as a "JUnit 5" test)
+    ** can ONLY be executed | JUnit 4
 
 [[running-tests-discovery-selectors]]
 === Discovery Selectors
