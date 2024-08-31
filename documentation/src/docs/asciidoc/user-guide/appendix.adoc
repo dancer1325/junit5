@@ -55,10 +55,11 @@ Central/Sonatype | locally -> same output artifact produced
     JUnit Platform Suite artifact that transitively pulls in dependencies on
     `junit-platform-suite-api` and `junit-platform-suite-engine` for simplified dependency
 	management in build tools such as Gradle and Maven.
-  ** `junit-platform-suite-api`::
-    Annotations for configuring test suites on the JUnit Platform. Supported by the
-    <<junit-platform-suite-engine, JUnit Platform Suite Engine>> and the
-    <<running-tests-junit-platform-runner, JUnitPlatform runner>>.
+  ** `junit-platform-suite-api`
+    *** == annotations -- for configuring -- test suites | JUnit Platform
+    *** supported by
+       **** <<junit-platform-suite-engine, JUnit Platform Suite Engine>>
+       **** <<running-tests-junit-platform-runner, JUnitPlatform runner>>
   ** `junit-platform-suite-commons`::
     Common support utilities for executing test suites on the JUnit Platform.
   ** `junit-platform-suite-engine`
