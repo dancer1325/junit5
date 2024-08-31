@@ -51,10 +51,10 @@ Central/Sonatype | locally -> same output artifact produced
   ** `junit-platform-runner`::
     Runner for executing tests and test suites on the JUnit Platform in a JUnit 4
     environment. See <<running-tests-junit-platform-runner>> for details.
-  ** `junit-platform-suite`::
-    JUnit Platform Suite artifact that transitively pulls in dependencies on
-    `junit-platform-suite-api` and `junit-platform-suite-engine` for simplified dependency
-	management in build tools such as Gradle and Maven.
+  ** `junit-platform-suite`
+    *** == artifact / transitively pulls in dependencies |
+        **** `junit-platform-suite-api`
+        **** `junit-platform-suite-engine`
   ** `junit-platform-suite-api`
     *** == annotations -- for configuring -- test suites | JUnit Platform
     *** supported by
