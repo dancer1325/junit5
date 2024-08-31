@@ -861,7 +861,7 @@ include::{testDir}/example/JUnitPlatformSuiteDemo.java[tags=user_guide]
     ** check Javadoc of the `{suite-api-package}` package
     ** _Example:_ `@SelectPackages`
 * if test classes and suites / -- annotated with -- `@RunWith(JUnitPlatform.class)` ->
-    ** can NOT be executed directly | JUnit Platform (as a "JUnit 5" test)
+    ** ⚠️ can NOT be executed directly | JUnit Platform (as a "JUnit 5" test) ⚠️
     ** can ONLY be executed | JUnit 4
 
 [[running-tests-discovery-selectors]]
