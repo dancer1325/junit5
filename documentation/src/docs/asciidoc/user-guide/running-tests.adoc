@@ -460,10 +460,15 @@ properties.
 [[running-tests-build-maven-config-params]]
 ===== Configuration Parameters
 
-You can set JUnit Platform <<running-tests-config-params, configuration parameters>> to
-influence test discovery and execution by declaring the `configurationParameters`
-property and providing key-value pairs using the Java `Properties` file syntax (as shown
-below) or via the `junit-platform.properties` file.
+* JUnit Platform <<running-tests-config-params, configuration parameters>>
+* allows
+    ** influence
+        *** test discovery
+        *** execution
+* `configurationParameters` property / pass key-value pairs
+    ** key-value pairs -- are passed, following the -- syntax
+        *** Java `.properties` or
+        *** `junit-platform.properties`
 
 [source,xml,indent=0]
 [subs=attributes+]
