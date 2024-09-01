@@ -773,20 +773,21 @@ disable it when such support is unavailable as follows.
 ====
 
 [[writing-tests-tagging-and-filtering]]
-=== Tagging and Filtering
+=== Tagging and Filtering -- `@Tag` --
 
-Test classes and methods can be tagged via the `@Tag` annotation. Those tags can later be
-used to filter <<running-tests, test discovery and execution>>. Please refer to the
-<<running-tests-tags>> section for more information about tag support in the JUnit
-Platform.
+* allowed |
+    ** test classes
+    ** methods
+* uses
+    ** filter <<running-tests, test discovery and execution>>
+* check
+    ** <<running-tests-tags>>
+    ** <<writing-tests-meta-annotations>>
 
 [source,java,indent=0]
 ----
 include::{testDir}/example/TaggingDemo.java[tags=user_guide]
 ----
-
-TIP: See <<writing-tests-meta-annotations>> for examples demonstrating how to create
-custom annotations for tags.
 
 [[writing-tests-test-execution-order]]
 === Test Execution Order
