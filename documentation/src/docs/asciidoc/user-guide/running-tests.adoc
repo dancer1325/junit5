@@ -966,23 +966,20 @@ Examples:
 [[running-tests-tags]]
 === Tags
 
-Tags are a JUnit Platform concept for marking and filtering tests. The programming model
-for adding tags to containers and tests is defined by the testing framework. For example,
-in JUnit Jupiter based tests, the `@Tag` annotation (see
-<<writing-tests-tagging-and-filtering>>) should be used. For JUnit 4 based tests, the
-Vintage engine maps `@Category` annotations to tags (see
-<<migrating-from-junit4-categories-support>>). Other testing frameworks may define their
-own annotation or other means for users to specify tags.
+* := JUnit Platform concept -- for -- marking and filtering tests
+    ** -- is defined by the -- testing framework
+        *** _Example1:_ `@Tag` | JUnit Jupiter based tests
+            **** check <<writing-tests-tagging-and-filtering>>
+        *** _Example2:_ `@Category` | JUnit 4 based tests / Vintage engine
+            **** check <<migrating-from-junit4-categories-support>>
 
 [[running-tests-tag-syntax-rules]]
 ==== Syntax Rules for Tags
 
-Regardless how a tag is specified, the JUnit Platform enforces the following rules:
-
-* A tag must not be `null` or _blank_.
-* A _trimmed_ tag must not contain whitespace.
-* A _trimmed_ tag must not contain ISO control characters.
-* A _trimmed_ tag must not contain any of the following _reserved characters_.
+* A tag must NOT be `null` or _blank_.
+* A _trimmed_ tag must NOT contain whitespace.
+* A _trimmed_ tag must NOT contain ISO control characters.
+* A _trimmed_ tag must NOT contain any of the following _reserved characters_.
 - `,`: _comma_
 - `(`: _left parenthesis_
 - `)`: _right parenthesis_
@@ -990,18 +987,20 @@ Regardless how a tag is specified, the JUnit Platform enforces the following rul
 - `|`: _vertical bar_
 - `!`: _exclamation point_
 
-NOTE: In the above context, "trimmed" means that leading and trailing whitespace
-characters have been removed.
+NOTE: "trimmed" = removing leading and trailing whitespace
 
 [[running-tests-tag-expressions]]
 ==== Tag Expressions
 
-Tag expressions are boolean expressions with the operators `!`, `&` and `|`. In addition,
-`(` and `)` can be used to adjust for operator precedence.
-
-Two special expressions are supported, `any()` and `none()`, which select all tests _with_
-any tags at all, and all tests _without_ any tags, respectively.
-These special expressions may be combined with other expressions just like normal tags.
+* == boolean expressions /
+    ** allowed operators
+        *** `!`,
+        *** `&`
+        *** `|`
+        *** `(`  `)`
+    ** special expressions
+        *** `any()` == ALL tests / have tags
+        *** `none()` ==  ALL tests / NO have tags
 
 .Operators (in descending order of precedence)
 |===
@@ -1012,10 +1011,9 @@ These special expressions may be combined with other expressions just like norma
 | `\|`     | or      | left
 |===
 
-If you are tagging your tests across multiple dimensions, tag expressions help you to
-select which tests to execute. When tagging by test type (e.g., _micro_, _integration_,
-_end-to-end_) and feature (e.g., *product*, *catalog*, *shipping*), the following tag
-expressions can be useful.
+* _Example:_ tagging by
+    ** test type ( -- _Example:_ _micro_, _integration_, _end-to-end_ --)
+    ** feature (-- _Example:_ *product*, *catalog*, *shipping* --)
 
 [%header,cols="40,60"]
 |===
