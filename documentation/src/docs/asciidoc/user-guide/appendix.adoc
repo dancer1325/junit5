@@ -36,8 +36,9 @@ Central/Sonatype | locally -> same output artifact produced
     An executable _Fat JAR_ that contains all dependencies is provided in Maven Central under the
     https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone[junit-platform-console-standalone]
     directory. See <<running-tests-console-launcher>> for details.
-  ** `junit-platform-engine`::
-    Public API for test engines. See <<launcher-api-engines-custom>> for details.
+  ** `junit-platform-engine`
+    *** == Public API for test engines
+    *** See <<launcher-api-engines-custom>>
   ** `junit-platform-jfr`::
     Provides a `LauncherDiscoveryListener` and `TestExecutionListener` for Java Flight
 	Recorder events on the JUnit Platform. See <<running-tests-listeners-flight-recorder>>
