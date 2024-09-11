@@ -55,9 +55,9 @@ tests to JUnit Jupiter.
 * `@Before` and `@After` no longer exist; use `@BeforeEach` and `@AfterEach` instead.
 * `@BeforeClass` and `@AfterClass` no longer exist; use `@BeforeAll` and `@AfterAll`
   instead.
-* `@Ignore` no longer exists: use `@Disabled` or one of the other built-in
-  <<writing-tests-conditional-execution, execution conditions>> instead
-  - See also <<migrating-from-junit4-ignore-annotation-support>>.
+* `@Ignore` NO longer exists
+    ** use `@Disabled` OR one of the other built-in <<writing-tests-conditional-execution, execution conditions>>
+    **  check <<migrating-from-junit4-ignore-annotation-support>>
 * `@Category` no longer exists; use `@Tag` instead.
 * `@RunWith` no longer exists; superseded by `@ExtendWith`.
 * `@Rule` and `@ClassRule` no longer exist; superseded by `@ExtendWith` and
