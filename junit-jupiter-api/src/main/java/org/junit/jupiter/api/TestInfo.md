@@ -11,7 +11,7 @@
       * `@AfterAll`
   * if a method parameter -- is of type -- `TestInfo` -> JUnit -- will supply an -- instance of `TestInfo` / corresponding to the 
     * current test or
-    * container
+    * current container
   * `String getDisplayName();`
     * display name
       * of the current
