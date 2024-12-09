@@ -254,20 +254,14 @@ name in a file named `org.junit.jupiter.api.extension.Extension` within the
 [[extensions-registration-automatic-enabling]]
 ===== Enabling Automatic Extension Detection
 
-Auto-detection is an advanced feature and is therefore not enabled by default. To enable
-it, set the `junit.jupiter.extensions.autodetection.enabled` _configuration parameter_ to
-`true`. This can be supplied as a JVM system property, as a _configuration parameter_ in
-the `LauncherDiscoveryRequest` that is passed to the `Launcher`, or via the JUnit Platform
-configuration file (see <<running-tests-config-params>> for details).
-
-For example, to enable auto-detection of extensions, you can start your JVM with the
-following system property.
-
-`-Djunit.jupiter.extensions.autodetection.enabled=true`
-
-When auto-detection is enabled, extensions discovered via the `{ServiceLoader}` mechanism
-will be added to the extension registry after JUnit Jupiter's global extensions (e.g.,
-support for `TestInfo`, `TestReporter`, etc.).
+* Auto-detection
+    ** == advanced feature / 👀NOT enabled by default 👀
+    ** if you want to enable it -> set `junit.jupiter.extensions.autodetection.enabled=true`
+        *** ways to supply
+            **** as a JVM system property, -- `-Djunit.jupiter.extensions.autodetection.enabled=true` --
+            **** as a _configuration parameter_ | `LauncherDiscoveryRequest`
+            **** JUnit Platform configuration file (see <<running-tests-config-params>>)
+        *** extensions / discovered via the `{ServiceLoader}` mechanism -> will be added | extension registry / AFTER JUnit Jupiter's global extensions (_Example:_ support for `TestInfo`, `TestReporter`, ...)
 
 [[extensions-registration-inheritance]]
 ==== Extension Inheritance
